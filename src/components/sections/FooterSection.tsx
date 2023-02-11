@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 const FooterSection = () => {
   return (
     <Box sx={{ textAlign: 'center', mb: 2 }}>
-      <IconButton href="https://github.com/gmmurray">
+      <IconButton href="https://github.com/gmmurray/gundam-evo-challenges">
         <GitHubIcon />
       </IconButton>
     </Box>
