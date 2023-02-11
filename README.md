@@ -1,46 +1,17 @@
-# Getting Started with Create React App
+# 🚀🚀 Gundam Evolution Challenges 🚀🚀
+> If any challenge types, units, or unit groups are missing please create an issue so I can add them in.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This simple application is a stand-in for Gundam Evolution's challenges system which, as of right now, is only accessible between matches. This makes it hard to know which challenges you have left and for which units. Now with this app you can just open a second monitor or alt tab and keep track of the challenges you would like to work on. All of your data is stored locally to your computer so you do not need to create an account or anything like that.
 
-## Available Scripts
+## Usage
+Using this app is meant to be as simple as possible.
+1. Clone the repo or navigate to the public URL
+2. Add your daily and weekly challenges
+    * Select the challenge type (kills, wins, etc.), amount (# of kills etc.), and the group of units. You can add additional unit groups if necessary. Please let me know if there are any missing and I will add them ASAP.
+3. Update your progress on the app as you make progress in the game
+4. Reset your dailies/weeklies whenever new ones arrive for you to work on
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Potential Features
+I consider this app to be mostly feature-complete because I want to keep it as simple and easy to use as possible. That being said I could still add a few things:
+-[ ] Add timers based on daily/weekly reset
+-[ ] Online data persistence

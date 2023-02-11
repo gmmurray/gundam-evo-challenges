@@ -1,0 +1,22 @@
+import { unitOptions } from './units';
+
+export type UnitGrouping = [
+  keyof typeof unitOptions,
+  keyof typeof unitOptions,
+  keyof typeof unitOptions,
+  keyof typeof unitOptions,
+];
+
+export const unitGroupings: UnitGrouping[] = [
+  ['asshimar', 'zaku_ranged', 'guntank', 'unicorn'],
+  ['turn_a', 'barbatos', 'gm_sniper', 'nu'],
+  ['gundam', 'gm', 'gm_sniper', 'zaku_melee'],
+  ['turn_a', 'zaku_ranged', 'methuss', 'mahiroo'],
+  ['gm', 'methuss', 'asshimar', 'hyperion'],
+  ['asshimar', 'barbatos', 'dom_trooper', 'marasai'],
+  ['pale_rider', 'zaku_ranged', 'dom_trooper', 'unicorn'],
+  ['turn_a', 'sazabi', 'gm_sniper', 'zaku_melee'],
+  ['pale_rider', 'gm', 'dom_trooper', 'exia'],
+  ['turn_a', 'zaku_ranged', 'methuss', 'mahiroo'],
+  ['gundam', 'sazabi', 'methuss', 'mahiroo'],
+];
