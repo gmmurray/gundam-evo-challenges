@@ -5,7 +5,7 @@ This simple application is a stand-in for Gundam Evolution's challenges system w
 
 ## Usage
 Using this app is meant to be as simple as possible.
-1. Clone the repo or navigate to the public URL
+1. Clone the repo or navigate to the [hosted URL](https://gundam-evo.gmurray.dev/)
 2. Add your daily and weekly challenges
     * Select the challenge type (kills, wins, etc.), amount (# of kills etc.), and the group of units. You can add additional unit groups if necessary. Please let me know if there are any missing and I will add them ASAP.
 3. Update your progress on the app as you make progress in the game
