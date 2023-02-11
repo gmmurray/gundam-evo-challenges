@@ -14,5 +14,5 @@ Using this app is meant to be as simple as possible.
 ## Potential Features
 I consider this app to be mostly feature-complete because I want to keep it as simple and easy to use as possible. That being said I could still add a few things:
 
--[] Add timers based on daily/weekly reset
--[] Online data persistence
+- [ ] Add timers based on daily/weekly reset
+- [ ] Online data persistence
