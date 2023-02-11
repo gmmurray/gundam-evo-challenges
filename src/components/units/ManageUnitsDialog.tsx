@@ -40,31 +40,39 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
           </Typography>
           <Button onClick={() => setCreateDialogOpen(true)}>Add group</Button>
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">Preset Groups</Typography>
-          {unitGroupings.map((grouping, index) => {
-            return <UnitGroupingDisplay key={index} grouping={grouping} />;
-          })}
-          {userGroupings.length > 0 && (
-            <Fragment>
-              <Typography variant="h6">Custom Groups</Typography>
-              {userGroupings.map((grouping, index) => {
-                return (
-                  <Box
-                    key={index}
-                    sx={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <UnitGroupingDisplay grouping={grouping} />
-                    <IconButton
-                      sx={{ ml: 'auto' }}
-                      onClick={() => updateUserGroupings(grouping)}
+          <Box sx={{ p: 2 }}>
+            <Typography variant="h6">Preset Groups</Typography>
+            {unitGroupings.map((grouping, index) => {
+              const isLast = index === unitGroupings.length - 1;
+              return (
+                <Fragment>
+                  <UnitGroupingDisplay key={index} grouping={grouping} />
+                  {!isLast && <Divider sx={{ my: 1 }} />}
+                </Fragment>
+              );
+            })}
+            {userGroupings.length > 0 && (
+              <Fragment>
+                <Typography variant="h6">Custom Groups</Typography>
+                {userGroupings.map((grouping, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{ display: 'flex', alignItems: 'center' }}
                     >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                );
-              })}
-            </Fragment>
-          )}
+                      <UnitGroupingDisplay grouping={grouping} />
+                      <IconButton
+                        sx={{ ml: 'auto' }}
+                        onClick={() => updateUserGroupings(grouping)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  );
+                })}
+              </Fragment>
+            )}
+          </Box>
         </DialogContent>
       </Dialog>
       <CreateGroupingDialog
