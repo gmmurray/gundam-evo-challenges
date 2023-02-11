@@ -6,7 +6,7 @@ import HeaderSection from './components/sections/HeaderSection';
 
 function App() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ my: 4 }}>
       <HeaderSection />
       <ChallengesSection
         title="Dailies"
