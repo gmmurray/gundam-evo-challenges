@@ -42,6 +42,6 @@ export const challengeTypes: Record<string, ChallengeType> = {
   gman: {
     title: 'Use G-Maneuver',
     increment: defaultIncrement,
-    options: [20],
+    options: [3,20],
   },
 };
