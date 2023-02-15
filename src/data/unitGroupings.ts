@@ -21,4 +21,5 @@ export const unitGroupings: UnitGrouping[] = [
   ['gundam', 'sazabi', 'methuss', 'mahiroo'],
   ['gundam', 'barbatos', 'methuss', 'marasai'],
   ['gundam', 'asshimar', 'gm_sniper', 'hyperion'],
+  ['pale_rider', 'sazabi', 'guntank', 'exia'],
 ];

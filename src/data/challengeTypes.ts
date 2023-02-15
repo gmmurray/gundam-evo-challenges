@@ -37,11 +37,11 @@ export const challengeTypes: Record<string, ChallengeType> = {
   kills: {
     title: 'Kills',
     increment: defaultIncrement,
-    options: [30],
+    options: [5, 30],
   },
   gman: {
     title: 'Use G-Maneuver',
     increment: defaultIncrement,
-    options: [3,20],
+    options: [3, 20],
   },
 };
