@@ -45,7 +45,7 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
             {unitGroupings.map((grouping, index) => {
               const isLast = index === unitGroupings.length - 1;
               return (
-                <Fragment>
+                <Fragment key={index}>
                   <UnitGroupingDisplay key={index} grouping={grouping} />
                   {!isLast && <Divider sx={{ my: 1 }} />}
                 </Fragment>
