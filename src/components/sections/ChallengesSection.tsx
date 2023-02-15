@@ -1,4 +1,4 @@
-import { Box, Button, List, Typography } from '@mui/material';
+import { Box, Button, List, Typography, useTheme } from '@mui/material';
 import {
   ChallengeProgress,
   ChallengesStorageKey,
@@ -11,21 +11,25 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
+import ReactTimeago from 'react-timeago';
 import { useStorageContext } from '../../contexts/storage/storageContext';
+
+const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
 type Props = {
   storageKey: ChallengesStorageKey;
-  challengePoints: number;
   title: string;
   challengeCount: number;
+  nextReset: Date;
 };
 
 const ChallengesSection = ({
   title,
-  challengePoints,
   storageKey,
   challengeCount,
+  nextReset,
 }: Props) => {
+  const theme = useTheme();
   const {
     localStorage: storage,
     updateChallenge,
@@ -62,6 +66,12 @@ const ChallengesSection = ({
     [],
   );
 
+  // change color if less than 2 hours away
+  const resetTextColor =
+    nextReset.getTime() - new Date().getTime() < TWO_HOURS_MS
+      ? theme.palette.warning.main
+      : 'text.secondary';
+
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -74,11 +84,10 @@ const ChallengesSection = ({
           <Typography variant="h4" component="h2">
             {title}
           </Typography>
-          <Typography variant="overline">{`${completedCount}/${challengeCount} completed`}</Typography>
-          <Typography variant="subtitle1">
-            These are worth {challengePoints} points each towards your battle
-            pass
+          <Typography variant="subtitle2" sx={{ color: resetTextColor }}>
+            Resets <ReactTimeago date={nextReset} />
           </Typography>
+          <Typography variant="overline">{`${completedCount}/${challengeCount} completed`}</Typography>
         </Box>
         <Box sx={{ ml: 'auto' }}>
           <Button onClick={handleReset}>Reset</Button>

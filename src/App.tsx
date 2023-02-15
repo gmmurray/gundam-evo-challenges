@@ -3,23 +3,25 @@ import { Container } from '@mui/system';
 import Divider from '@mui/material/Divider';
 import FooterSection from './components/sections/FooterSection';
 import HeaderSection from './components/sections/HeaderSection';
+import { useResets } from './hooks/useResets';
 
 function App() {
+  const { daily, weekly } = useResets();
   return (
     <Container maxWidth="md" sx={{ my: 4 }}>
       <HeaderSection />
       <ChallengesSection
         title="Dailies"
-        challengePoints={100}
         challengeCount={3}
         storageKey={'dailies'}
+        nextReset={daily}
       />
       <Divider sx={{ my: 2 }} />
       <ChallengesSection
         title="Weeklies"
-        challengePoints={600}
         challengeCount={6}
         storageKey={'weeklies'}
+        nextReset={weekly}
       />
       <Divider sx={{ my: 2 }} />
       <FooterSection />
