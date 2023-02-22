@@ -1,7 +1,9 @@
 import { ChallengeType } from '../types/challenges';
 
-const defaultIncrement: ChallengeType['increment'] = prev => prev + 1;
-const damageIncrement: ChallengeType['increment'] = prev => prev + 1000;
+const defaultIncrement: ChallengeType['increment'] = (prev, total) =>
+  Math.min(prev + 1, total);
+const damageIncrement: ChallengeType['increment'] = (prev, total) =>
+  Math.min(prev + 1000, total);
 
 export const challengeTypes: Record<string, ChallengeType> = {
   wins: {

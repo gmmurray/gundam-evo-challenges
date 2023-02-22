@@ -31,7 +31,7 @@ const ChallengeListItem = ({ challenge, onChange }: Props) => {
   const handleIncrement = useCallback(() => {
     onChange({
       ...challenge,
-      progress: challengeType.increment(challenge.progress),
+      progress: challengeType.increment(challenge.progress, challenge.total),
     });
   }, [challenge, challengeType, onChange]);
 
