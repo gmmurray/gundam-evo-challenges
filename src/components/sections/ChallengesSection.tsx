@@ -3,7 +3,7 @@ import {
   ChallengeProgress,
   ChallengesStorageKey,
 } from '../../types/challenges';
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import ChallengeEditor from '../challenges/ChallengeEditor';
 import ChallengeListItem from '../challenges/ChallengeListItem';
@@ -57,6 +57,12 @@ const ChallengesSection = ({
     completedCount === challengeCount,
   );
 
+  useEffect(() => {
+    if (completedCount === challengeCount) {
+      setHideSection(true);
+    }
+  }, [challengeCount, completedCount]);
+
   const handleReset = useCallback(() => {
     resetChallenges(storageKey);
   }, [resetChallenges, storageKey]);
@@ -93,7 +99,7 @@ const ChallengesSection = ({
           <Button onClick={handleReset}>Reset</Button>
         </Box>
       </Box>
-      <Collapse in={!hideSection}>
+      <Collapse in={!hideSection} timeout={500}>
         <List sx={{ pl: 3 }}>
           {[...Array(challengeCount)].map((_, index) => {
             if (challenges[index]) {
