@@ -65,6 +65,7 @@ const ChallengesSection = ({
 
   const handleReset = useCallback(() => {
     resetChallenges(storageKey);
+    setHideSection(false);
   }, [resetChallenges, storageKey]);
 
   const handleToggleHidden = useCallback(

@@ -29,7 +29,7 @@ export const challengeTypes: Record<string, ChallengeType> = {
   crits: {
     title: 'Get critical hit kills',
     increment: defaultIncrement,
-    options: [5],
+    options: [1, 5],
   },
   repair: {
     title: 'Repair HP for self or team members',
