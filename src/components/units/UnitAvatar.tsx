@@ -14,9 +14,11 @@ const UnitAvatar = ({ unit, viewEnabled = false }: Props) => {
   const avatarUrl = getUnitAvatarUrl(unit);
   return (
     <Tooltip key={unit.id} title={unit.name} followCursor>
-      <Wrapper unit={unit} viewEnabled={viewEnabled}>
-        <Avatar src={avatarUrl} sx={{}} sizes="large" />
-      </Wrapper>
+      <span>
+        <Wrapper unit={unit} viewEnabled={viewEnabled}>
+          <Avatar src={avatarUrl} sx={{}} sizes="large" />
+        </Wrapper>
+      </span>
     </Tooltip>
   );
 };
