@@ -6,6 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import StorageProvider from './contexts/storage/StorageProvider';
 import ThemeWrapper from './theme/ThemeWrapper';
+import ViewUnitProvider from './contexts/viewUnit/ViewUnitProvider';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
@@ -14,7 +16,9 @@ root.render(
     <ThemeWrapper>
       <CssBaseline />
       <StorageProvider>
-        <App />
+        <ViewUnitProvider>
+          <App />
+        </ViewUnitProvider>
       </StorageProvider>
     </ThemeWrapper>
   </React.StrictMode>,

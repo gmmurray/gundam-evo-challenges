@@ -1,4 +1,4 @@
-import { Divider, IconButton } from '@mui/material';
+import { Box, Divider, IconButton } from '@mui/material';
 import { UnitGrouping, unitGroupings } from '../../data/unitGroupings';
 import {
   groupingAlreadyExists,
@@ -61,6 +61,11 @@ const CreateGroupingDialog = ({ open, onClose }: Props) => {
     updateUserGroupings,
   ]);
 
+  const handleCancelClick = useCallback(() => {
+    setSelected([]);
+    onClose();
+  }, [onClose]);
+
   const toggleSelection = useCallback((selection: string) => {
     setSelected(state => {
       const newValue = state.includes(selection)
@@ -84,11 +89,27 @@ const CreateGroupingDialog = ({ open, onClose }: Props) => {
         <Typography variant="body1">Each group contains 4 units</Typography>
         <Grid container spacing={2} sx={{ my: 2 }}>
           {selected.map(selection => {
+            const unit = unitOptions[selection];
+
+            if (!unit) {
+              return null;
+            }
+
             return (
-              <Grid item>
-                <IconButton onClick={() => toggleSelection(selection)}>
-                  <UnitAvatar unit={unitOptions[selection]} />
-                </IconButton>
+              <Grid
+                item
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="overline">{unit.name}</Typography>
+                <Box>
+                  <IconButton onClick={() => toggleSelection(selection)}>
+                    <UnitAvatar unit={unit} />
+                  </IconButton>
+                </Box>
               </Grid>
             );
           })}
@@ -122,7 +143,7 @@ const CreateGroupingDialog = ({ open, onClose }: Props) => {
         <Button disabled={canAdd} onClick={handleSaveClick}>
           Save
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={handleCancelClick}>Cancel</Button>
       </DialogActions>
     </Dialog>
   );

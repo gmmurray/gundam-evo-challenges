@@ -6,9 +6,10 @@ import { getUnitsFromGrouping } from '../../helpers/unitHelpers';
 
 type Props = {
   grouping: UnitGrouping;
+  viewEnabled?: boolean;
 };
 
-const UnitGroupingDisplay = ({ grouping }: Props) => {
+const UnitGroupingDisplay = ({ grouping, viewEnabled = false }: Props) => {
   const units = getUnitsFromGrouping(grouping);
   return (
     <Box sx={{ width: '100%' }}>
@@ -24,7 +25,7 @@ const UnitGroupingDisplay = ({ grouping }: Props) => {
                 textAlign: 'center',
               }}
             >
-              <UnitAvatar unit={unit} />
+              <UnitAvatar unit={unit} viewEnabled={viewEnabled} />
             </Grid>
           );
         })}

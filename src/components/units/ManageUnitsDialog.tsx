@@ -46,7 +46,11 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
               const isLast = index === unitGroupings.length - 1;
               return (
                 <Fragment key={index}>
-                  <UnitGroupingDisplay key={index} grouping={grouping} />
+                  <UnitGroupingDisplay
+                    key={index}
+                    grouping={grouping}
+                    viewEnabled={true}
+                  />
                   {!isLast && <Divider sx={{ my: 1 }} />}
                 </Fragment>
               );
@@ -60,7 +64,10 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
                       key={index}
                       sx={{ display: 'flex', alignItems: 'center' }}
                     >
-                      <UnitGroupingDisplay grouping={grouping} />
+                      <UnitGroupingDisplay
+                        grouping={grouping}
+                        viewEnabled={true}
+                      />
                       <IconButton
                         sx={{ ml: 'auto' }}
                         onClick={() => updateUserGroupings(grouping)}

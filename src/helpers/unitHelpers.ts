@@ -8,6 +8,9 @@ export const getUnitsFromGrouping = (grouping: UnitGrouping): Unit[] => {
 
 export const getUnitAvatarUrl = (unit: Unit) => `/images/units/${unit.avatar}`;
 
+export const getUnitOfficialUrl = (unit: Unit) =>
+  `https://gundamevolution.com/en/unit/${unit.websiteId}`;
+
 export const groupingsAreEqual = (
   grouping1: UnitGrouping,
   grouping2: UnitGrouping,

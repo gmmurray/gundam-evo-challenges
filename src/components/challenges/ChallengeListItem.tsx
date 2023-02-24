@@ -71,7 +71,10 @@ const ChallengeListItem = ({ challenge, onChange }: Props) => {
               />
             </Grid>
             <Grid item xs={12} md="auto">
-              <UnitGroupingDisplay grouping={challenge.grouping} />
+              <UnitGroupingDisplay
+                grouping={challenge.grouping}
+                viewEnabled={true}
+              />
             </Grid>
           </Grid>
         </ListItemText>
