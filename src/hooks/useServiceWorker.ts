@@ -2,6 +2,7 @@ import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 
 import { useCallback, useEffect, useState } from 'react';
 
+// credit: https://felixgerschau.com/create-a-pwa-update-notification-with-create-react-app/
 export const useServiceWorker = () => {
   const [canUpdate, setCanUpdate] = useState(false);
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(
