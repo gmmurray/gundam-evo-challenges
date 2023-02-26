@@ -2,6 +2,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 import App from './App';
 import CssBaseline from '@mui/material/CssBaseline';
+import PersonalDetailsProvider from './contexts/personal/PersonalDetailsProvider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ServiceWorkerWrapper from './components/layout/ServiceWorkerWrapper';
@@ -16,12 +17,14 @@ root.render(
   <React.StrictMode>
     <ThemeWrapper>
       <ServiceWorkerWrapper>
-        <CssBaseline />
-        <StorageProvider>
-          <ViewUnitProvider>
-            <App />
-          </ViewUnitProvider>
-        </StorageProvider>
+        <PersonalDetailsProvider>
+          <CssBaseline />
+          <StorageProvider>
+            <ViewUnitProvider>
+              <App />
+            </ViewUnitProvider>
+          </StorageProvider>
+        </PersonalDetailsProvider>
       </ServiceWorkerWrapper>
     </ThemeWrapper>
   </React.StrictMode>,
