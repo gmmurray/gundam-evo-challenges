@@ -5,10 +5,11 @@ import { usePersonalDetailsContext } from '../../contexts/personal/PersonalDetai
 
 const FooterSection = () => {
   const { showPersonalDetails } = usePersonalDetailsContext();
+  const repoURL = process.env.REACT_APP_REPO_URL ?? undefined;
   return (
     <Box sx={{ textAlign: 'center', mb: 2 }}>
-      {showPersonalDetails && (
-        <IconButton href="https://github.com/gmmurray/gundam-evo-challenges">
+      {showPersonalDetails && repoURL && (
+        <IconButton href={repoURL}>
           <GitHubIcon />
         </IconButton>
       )}
