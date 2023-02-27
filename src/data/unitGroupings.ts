@@ -1,11 +1,6 @@
 import { unitOptions } from './units';
 
-export type UnitGrouping = [
-  keyof typeof unitOptions,
-  keyof typeof unitOptions,
-  keyof typeof unitOptions,
-  keyof typeof unitOptions,
-];
+export type UnitGrouping = (keyof typeof unitOptions)[];
 
 export const unitGroupings: UnitGrouping[] = [
   ['asshimar', 'zaku_ranged', 'guntank', 'unicorn'],

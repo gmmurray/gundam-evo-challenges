@@ -5,14 +5,17 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { UnitGrouping, unitGroupings } from '../../data/unitGroupings';
+import {
+  groupingsAreEqual,
+  sortUnitGroupings,
+} from '../../helpers/unitHelpers';
 
 import Button from '@mui/material/Button';
 import CreateGroupingDialog from './CreateGroupingDialog';
 import DialogTitleWithClose from '../material/DialogTitleWithClose';
 import UnitGroupingDisplay from './UnitGroupingDisplay';
-import { groupingsAreEqual } from '../../helpers/unitHelpers';
 import { useStorageContext } from '../../contexts/storage/storageContext';
 
 type Props = {
@@ -34,7 +37,11 @@ const UnitGroupingDialog = ({
 
   const [createGroupingOpen, setCreateGroupingOpen] = useState(false);
 
-  const allGroupings = [...unitGroupings, ...userGroupings];
+  const allGroupings = useMemo(
+    () => sortUnitGroupings([...unitGroupings, ...userGroupings]),
+    [userGroupings],
+  );
+
   return (
     <Fragment>
       <Dialog maxWidth="sm" fullWidth open={open} onClose={onClose}>

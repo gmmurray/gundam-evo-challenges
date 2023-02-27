@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogContent,
@@ -10,13 +11,11 @@ import {
 } from '@mui/material';
 import { Fragment, PropsWithChildren, useState } from 'react';
 import { ViewUnitContext, ViewUnitContextType } from './viewUnitContext';
-import {
-  getUnitAvatarUrl,
-  getUnitOfficialUrl,
-} from '../../helpers/unitHelpers';
+import { getUnitFullUrl, getUnitOfficialUrl } from '../../helpers/unitHelpers';
 
 import DialogTitleWithClose from '../../components/material/DialogTitleWithClose';
 import LaunchIcon from '@mui/icons-material/Launch';
+import UnitAvatar from '../../components/units/UnitAvatar';
 
 type Props = {} & PropsWithChildren;
 
@@ -50,9 +49,16 @@ const ViewUnitProvider = ({ children }: Props) => {
             <DialogContent>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="h3" sx={{ mb: 0 }}>
-                    {visibleUnit.name}
-                  </Typography>
+                  <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <UnitAvatar unit={visibleUnit} />
+                    </Box>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="h3" sx={{ mb: 0, ml: 1 }}>
+                        {visibleUnit.name}
+                      </Typography>
+                    </Box>
+                  </Box>
                   <Button
                     variant="text"
                     endIcon={<LaunchIcon />}
@@ -76,7 +82,7 @@ const ViewUnitProvider = ({ children }: Props) => {
                   }}
                 >
                   <img
-                    src={getUnitAvatarUrl(visibleUnit)}
+                    src={getUnitFullUrl(visibleUnit)}
                     height="170"
                     width="185"
                     alt={`${visibleUnit.name} thumbnail`}

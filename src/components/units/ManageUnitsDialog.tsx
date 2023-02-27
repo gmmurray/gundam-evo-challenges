@@ -7,12 +7,13 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
 import CreateGroupingDialog from './CreateGroupingDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DialogTitleWithClose from '../material/DialogTitleWithClose';
 import UnitGroupingDisplay from './UnitGroupingDisplay';
+import { sortUnitGroupings } from '../../helpers/unitHelpers';
 import { unitGroupings } from '../../data/unitGroupings';
 import { useStorageContext } from '../../contexts/storage/storageContext';
 
@@ -29,6 +30,11 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
+  const sortedUnitGroupings = useMemo(
+    () => sortUnitGroupings(unitGroupings),
+    [],
+  );
+
   return (
     <Fragment>
       <Dialog open={open} onClose={onClose}>
@@ -42,8 +48,8 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
           <Divider sx={{ my: 2 }} />
           <Box sx={{ p: 2 }}>
             <Typography variant="h6">Preset Groups</Typography>
-            {unitGroupings.map((grouping, index) => {
-              const isLast = index === unitGroupings.length - 1;
+            {sortedUnitGroupings.map((grouping, index) => {
+              const isLast = index === sortedUnitGroupings.length - 1;
               return (
                 <Fragment key={index}>
                   <UnitGroupingDisplay
