@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { ChallengeProgress } from '../../types/challenges';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import LinearProgressWithLabel from '../material/LinearProgressWithLabel';
@@ -15,7 +16,7 @@ import { challengeTypes } from '../../data/challengeTypes';
 
 type Props = {
   challenge: ChallengeProgress;
-  onChange: (value: ChallengeProgress) => void;
+  onChange: (value?: ChallengeProgress) => void;
 };
 
 const ChallengeListItem = ({ challenge, onChange }: Props) => {
@@ -35,19 +36,23 @@ const ChallengeListItem = ({ challenge, onChange }: Props) => {
     });
   }, [challenge, challengeType, onChange]);
 
+  const handleClear = useCallback(() => {
+    onChange(undefined);
+  }, [onChange]);
+
   return (
     <Fragment>
       <ListItem
+        divider
         className={isComplete ? 'Mui-selected' : undefined}
         secondaryAction={
-          <Tooltip title={isComplete ? 'Done!' : 'Increment'}>
+          <Tooltip title={isComplete ? 'Remove' : 'Increment'}>
             <span>
               <IconButton
                 edge="end"
-                disabled={challenge.progress === challenge.total}
-                onClick={handleIncrement}
+                onClick={isComplete ? handleClear : handleIncrement}
               >
-                <AddIcon />
+                {isComplete ? <DeleteIcon /> : <AddIcon />}
               </IconButton>
             </span>
           </Tooltip>

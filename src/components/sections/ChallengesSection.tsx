@@ -115,6 +115,7 @@ const ChallengesSection = ({
               return (
                 <ChallengeEditor
                   key={index}
+                  resetType={storageKey}
                   onSave={challenge => handleUpdate(index, challenge)}
                 />
               );

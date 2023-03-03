@@ -6,9 +6,12 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
+import {
+  ChallengeProgress,
+  ChallengesStorageKey,
+} from '../../types/challenges';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
-import { ChallengeProgress } from '../../types/challenges';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Dialog from '@mui/material/Dialog';
@@ -21,12 +24,14 @@ import { UnitGrouping } from '../../data/unitGroupings';
 import UnitGroupingDialog from '../units/UnitGroupingDialog';
 import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
 import { challengeTypes } from '../../data/challengeTypes';
+import { getDefaultChallengeTotal } from '../../helpers/challengeHelpers';
 
 type Props = {
   onSave: (value: ChallengeProgress) => void;
+  resetType: ChallengesStorageKey;
 };
 
-const ChallengeEditor = ({ onSave }: Props) => {
+const ChallengeEditor = ({ onSave, resetType }: Props) => {
   const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>({});
   const [unitsDialogOpen, setUnitsDialogOpen] = useState(false);
   const [customAmountDialogOpen, setCustomAmountDialogOpen] = useState(false);
@@ -50,10 +55,10 @@ const ChallengeEditor = ({ onSave }: Props) => {
     if (challenge.type) {
       setChallenge(state => ({
         ...state,
-        total: undefined,
+        total: getDefaultChallengeTotal(resetType, challenge.type),
       }));
     }
-  }, [challenge.type]);
+  }, [challenge.type, resetType]);
 
   const handleGroupingUpdate = useCallback(
     (grouping: UnitGrouping) => {

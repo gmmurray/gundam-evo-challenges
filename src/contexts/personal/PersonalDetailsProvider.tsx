@@ -6,7 +6,6 @@ const envVariableValue = process.env.REACT_APP_SHOW_PERSONAL_DETAILS ?? 'false';
 
 type Props = {} & PropsWithChildren;
 const PersonalDetailsProvider = ({ children }: Props) => {
-  console.log(process.env.REACT_APP_SHOW_PERSONAL_DETAILS);
   const showPersonalDetails = envVariableValue === 'true';
 
   return (
