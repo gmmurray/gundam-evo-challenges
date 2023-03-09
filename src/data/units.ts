@@ -163,4 +163,12 @@ export const unitOptions: Record<Unit['id'], Unit> = {
       'A unit that possesses two defensive arms—a shield and a barrier.While balanced for attack or defense for frontline and area control, its Armure Lumiere Lancer can break through enemy lines.',
     model: `CAT1-X1/3`,
   },
+  heavyarms: {
+    id: 'heavyarms',
+    name: 'Gundam Heavyarms Custom [EW]',
+    imageName: 'heavyarms.png',
+    websiteId: 20,
+    description: 'TBA',
+    model: 'XXXG-01H2',
+  },
 };
