@@ -6,10 +6,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import {
-  ChallengeProgress,
-  ChallengesStorageKey,
-} from '../../types/challenges';
+import { ChallengeProgress, ChallengeResetType } from '../../types/challenges';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
 import CheckIcon from '@mui/icons-material/Check';
@@ -28,7 +25,7 @@ import { getDefaultChallengeTotal } from '../../helpers/challengeHelpers';
 
 type Props = {
   onSave: (value: ChallengeProgress) => void;
-  resetType: ChallengesStorageKey;
+  resetType: ChallengeResetType;
 };
 
 const ChallengeEditor = ({ onSave, resetType }: Props) => {

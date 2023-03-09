@@ -1,3 +1,5 @@
+import 'firebase/compat/auth';
+
 import ChallengesSection from './components/sections/ChallengesSection';
 import { Container } from '@mui/system';
 import Divider from '@mui/material/Divider';
@@ -13,14 +15,14 @@ function App() {
       <ChallengesSection
         title="Dailies"
         challengeCount={3}
-        storageKey={'dailies'}
+        resetType={'dailies'}
         nextReset={daily}
       />
       <Divider sx={{ my: 2 }} />
       <ChallengesSection
         title="Weeklies"
         challengeCount={6}
-        storageKey={'weeklies'}
+        resetType={'weeklies'}
         nextReset={weekly}
       />
       <Divider sx={{ my: 2 }} />

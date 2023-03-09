@@ -1,8 +1,8 @@
-import { ChallengesStorageKey } from '../types/challenges';
+import { ChallengeResetType } from '../types/challenges';
 import { challengeTypes } from '../data/challengeTypes';
 
 export const getDefaultChallengeTotal = (
-  resetType: ChallengesStorageKey,
+  resetType: ChallengeResetType,
   type?: keyof typeof challengeTypes,
 ): number | undefined => {
   if (!type) {

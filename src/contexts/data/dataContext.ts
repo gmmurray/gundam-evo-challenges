@@ -1,33 +1,30 @@
-import {
-  ChallengeProgress,
-  ChallengesStorageKey,
-} from '../../types/challenges';
+import { ChallengeProgress, ChallengeResetType } from '../../types/challenges';
 import { createContext, useContext } from 'react';
 
 import { UnitGrouping } from '../../data/unitGroupings';
 
-export type StorageContextType = {
-  localStorage: {
+export type DataContextValueType = {
+  challengeData: {
     dailies: Record<number, ChallengeProgress>;
     weeklies: Record<number, ChallengeProgress>;
     userGroupings: UnitGrouping[];
   };
   updateChallenge: (
-    type: ChallengesStorageKey,
+    type: ChallengeResetType,
     key: number,
     challenge?: ChallengeProgress,
   ) => void;
-  resetChallenges: (type: ChallengesStorageKey) => void;
+  resetChallenges: (type: ChallengeResetType) => void;
   updateUserGroupings: (grouping: UnitGrouping) => void;
 };
 
-export const defaultStorageContext: StorageContextType = {
-  localStorage: { dailies: {}, weeklies: {}, userGroupings: [] },
+export const defaultDataContextValue: DataContextValueType = {
+  challengeData: { dailies: {}, weeklies: {}, userGroupings: [] },
   updateChallenge: () => {},
   resetChallenges: () => {},
   updateUserGroupings: () => {},
 };
 
-export const StorageContext = createContext(defaultStorageContext);
+export const DataContext = createContext(defaultDataContextValue);
 
-export const useStorageContext = () => useContext(StorageContext);
+export const useDataContext = () => useContext(DataContext);

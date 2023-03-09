@@ -1,8 +1,5 @@
 import { Box, Button, List, Typography, useTheme } from '@mui/material';
-import {
-  ChallengeProgress,
-  ChallengesStorageKey,
-} from '../../types/challenges';
+import { ChallengeProgress, ChallengeResetType } from '../../types/challenges';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import ChallengeEditor from '../challenges/ChallengeEditor';
@@ -12,12 +9,12 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import ReactTimeago from 'react-timeago';
-import { useStorageContext } from '../../contexts/storage/storageContext';
+import { useDataContext } from '../../contexts/data/dataContext';
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
 type Props = {
-  storageKey: ChallengesStorageKey;
+  resetType: ChallengeResetType;
   title: string;
   challengeCount: number;
   nextReset: Date;
@@ -25,18 +22,18 @@ type Props = {
 
 const ChallengesSection = ({
   title,
-  storageKey,
+  resetType,
   challengeCount,
   nextReset,
 }: Props) => {
   const theme = useTheme();
   const {
-    localStorage: storage,
+    challengeData: storage,
     updateChallenge,
     resetChallenges,
-  } = useStorageContext();
+  } = useDataContext();
 
-  const challenges = storage[storageKey];
+  const challenges = storage[resetType];
 
   const completedCount = useMemo(
     () =>
@@ -48,9 +45,9 @@ const ChallengesSection = ({
 
   const handleUpdate = useCallback(
     (key: number, challenge?: ChallengeProgress) => {
-      updateChallenge(storageKey, key, challenge);
+      updateChallenge(resetType, key, challenge);
     },
-    [storageKey, updateChallenge],
+    [resetType, updateChallenge],
   );
 
   const [hideSection, setHideSection] = useState(
@@ -64,9 +61,9 @@ const ChallengesSection = ({
   }, [challengeCount, completedCount]);
 
   const handleReset = useCallback(() => {
-    resetChallenges(storageKey);
+    resetChallenges(resetType);
     setHideSection(false);
-  }, [resetChallenges, storageKey]);
+  }, [resetChallenges, resetType]);
 
   const handleToggleHidden = useCallback(
     () => setHideSection(state => !state),
@@ -115,7 +112,7 @@ const ChallengesSection = ({
               return (
                 <ChallengeEditor
                   key={index}
-                  resetType={storageKey}
+                  resetType={resetType}
                   onSave={challenge => handleUpdate(index, challenge)}
                 />
               );

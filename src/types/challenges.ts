@@ -13,4 +13,4 @@ export type ChallengeType = {
   options: number[];
 };
 
-export type ChallengesStorageKey = 'dailies' | 'weeklies';
+export type ChallengeResetType = 'dailies' | 'weeklies';

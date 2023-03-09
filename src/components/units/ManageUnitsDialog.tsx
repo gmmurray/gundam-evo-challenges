@@ -15,7 +15,7 @@ import DialogTitleWithClose from '../material/DialogTitleWithClose';
 import UnitGroupingDisplay from './UnitGroupingDisplay';
 import { sortUnitGroupings } from '../../helpers/unitHelpers';
 import { unitGroupings } from '../../data/unitGroupings';
-import { useStorageContext } from '../../contexts/storage/storageContext';
+import { useDataContext } from '../../contexts/data/dataContext';
 
 type Props = {
   open: boolean;
@@ -24,9 +24,9 @@ type Props = {
 
 const ManageUnitsDialog = ({ open, onClose }: Props) => {
   const {
-    localStorage: { userGroupings },
+    challengeData: { userGroupings },
     updateUserGroupings,
-  } = useStorageContext();
+  } = useDataContext();
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 

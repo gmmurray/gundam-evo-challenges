@@ -16,7 +16,7 @@ import Button from '@mui/material/Button';
 import CreateGroupingDialog from './CreateGroupingDialog';
 import DialogTitleWithClose from '../material/DialogTitleWithClose';
 import UnitGroupingDisplay from './UnitGroupingDisplay';
-import { useStorageContext } from '../../contexts/storage/storageContext';
+import { useDataContext } from '../../contexts/data/dataContext';
 
 type Props = {
   open: boolean;
@@ -32,8 +32,8 @@ const UnitGroupingDialog = ({
   onUpdate,
 }: Props) => {
   const {
-    localStorage: { userGroupings },
-  } = useStorageContext();
+    challengeData: { userGroupings },
+  } = useDataContext();
 
   const [createGroupingOpen, setCreateGroupingOpen] = useState(false);
 

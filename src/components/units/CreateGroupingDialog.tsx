@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import UnitAvatar from './UnitAvatar';
 import { unitOptions } from '../../data/units';
-import { useStorageContext } from '../../contexts/storage/storageContext';
+import { useDataContext } from '../../contexts/data/dataContext';
 
 type Props = {
   open: boolean;
@@ -23,9 +23,9 @@ type Props = {
 };
 const CreateGroupingDialog = ({ open, onClose }: Props) => {
   const {
-    localStorage: { userGroupings },
+    challengeData: { userGroupings },
     updateUserGroupings,
-  } = useStorageContext();
+  } = useDataContext();
 
   const [selected, setSelected] = useState<string[]>([]);
 
