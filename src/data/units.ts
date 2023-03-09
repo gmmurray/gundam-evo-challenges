@@ -168,7 +168,8 @@ export const unitOptions: Record<Unit['id'], Unit> = {
     name: 'Gundam Heavyarms Custom [EW]',
     imageName: 'heavyarms.png',
     websiteId: 20,
-    description: 'TBA',
+    description:
+      'A unit with superb offensive capabilities, featuring a main weapon that does not require reloading.It can destroy individual enemies with its Double Gatling Gun (Dual Wield) and suppress an area with its Hatch Full Open (Barrage).',
     model: 'XXXG-01H2',
   },
 };
