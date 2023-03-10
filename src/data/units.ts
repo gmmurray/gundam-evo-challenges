@@ -163,4 +163,13 @@ export const unitOptions: Record<Unit['id'], Unit> = {
       'A unit that possesses two defensive arms—a shield and a barrier.While balanced for attack or defense for frontline and area control, its Armure Lumiere Lancer can break through enemy lines.',
     model: `CAT1-X1/3`,
   },
+  heavyarms: {
+    id: 'heavyarms',
+    name: 'Gundam Heavyarms Custom [EW]',
+    imageName: 'heavyarms.png',
+    websiteId: 20,
+    description:
+      'A unit with superb offensive capabilities, featuring a main weapon that does not require reloading.It can destroy individual enemies with its Double Gatling Gun (Dual Wield) and suppress an area with its Hatch Full Open (Barrage).',
+    model: 'XXXG-01H2',
+  },
 };
