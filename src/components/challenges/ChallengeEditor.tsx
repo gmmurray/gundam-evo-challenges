@@ -26,6 +26,11 @@ import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
 import { challengeTypes } from '../../data/challengeTypes';
 import { getDefaultChallengeTotal } from '../../helpers/challengeHelpers';
 
+const getCanSave = (challenge: Partial<ChallengeProgress>) =>
+  challenge.grouping !== undefined &&
+  challenge.total !== undefined &&
+  !!challenge.type;
+
 type Props = {
   onSave: (value: ChallengeProgress) => void;
   resetType: ChallengesStorageKey;
@@ -39,16 +44,29 @@ const ChallengeEditor = ({ onSave, resetType }: Props) => {
     undefined,
   );
 
-  const canSave =
-    challenge.grouping !== undefined &&
-    challenge.total !== undefined &&
-    !!challenge.type;
+  const handleSave = useCallback(
+    (ch: Partial<ChallengeProgress>) => {
+      if (!getCanSave(ch)) {
+        return;
+      }
+
+      onSave({ ...ch, progress: 0 } as ChallengeProgress);
+    },
+    [onSave],
+  );
 
   const handleUpdate = useCallback(
     (key: keyof ChallengeProgress, value: any) => {
-      setChallenge(state => ({ ...state, [key]: value }));
+      setChallenge(state => {
+        const newState = { ...state, [key]: value };
+
+        if (getCanSave(newState)) {
+          handleSave(newState);
+        }
+        return newState;
+      });
     },
-    [],
+    [handleSave],
   );
 
   useEffect(() => {
@@ -72,14 +90,6 @@ const ChallengeEditor = ({ onSave, resetType }: Props) => {
     },
     [challenge.grouping, handleUpdate],
   );
-
-  const handleSave = useCallback(() => {
-    if (!canSave) {
-      return;
-    }
-
-    onSave({ ...challenge, progress: 0 } as ChallengeProgress);
-  }, [canSave, challenge, onSave]);
 
   const handleReset = useCallback(() => {
     setChallenge({});
@@ -106,7 +116,7 @@ const ChallengeEditor = ({ onSave, resetType }: Props) => {
       <ListItem
         secondaryAction={
           <Box>
-            <IconButton disabled={!canSave} onClick={handleSave}>
+            <IconButton disabled={!getCanSave(challenge)} onClick={handleSave}>
               <CheckIcon />
             </IconButton>
             <IconButton onClick={handleReset}>
