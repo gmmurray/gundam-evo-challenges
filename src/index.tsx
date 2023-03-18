@@ -1,6 +1,9 @@
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 import App from './App';
+import Changes from './Changes';
 import CssBaseline from '@mui/material/CssBaseline';
 import PersonalDetailsProvider from './contexts/personal/PersonalDetailsProvider';
 import React from 'react';
@@ -21,7 +24,13 @@ root.render(
           <CssBaseline />
           <StorageProvider>
             <ViewUnitProvider>
-              <App />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<App />} />
+                  <Route path="/changes" element={<Changes />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </BrowserRouter>
             </ViewUnitProvider>
           </StorageProvider>
         </PersonalDetailsProvider>
