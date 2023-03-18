@@ -18,24 +18,24 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeWrapper>
-      <ServiceWorkerWrapper>
-        <PersonalDetailsProvider>
-          <CssBaseline />
-          <StorageProvider>
-            <ViewUnitProvider>
-              <BrowserRouter>
+    <BrowserRouter>
+      <ThemeWrapper>
+        <ServiceWorkerWrapper>
+          <PersonalDetailsProvider>
+            <CssBaseline />
+            <StorageProvider>
+              <ViewUnitProvider>
                 <Routes>
                   <Route path="/" element={<App />} />
                   <Route path="/changes" element={<Changes />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
-              </BrowserRouter>
-            </ViewUnitProvider>
-          </StorageProvider>
-        </PersonalDetailsProvider>
-      </ServiceWorkerWrapper>
-    </ThemeWrapper>
+              </ViewUnitProvider>
+            </StorageProvider>
+          </PersonalDetailsProvider>
+        </ServiceWorkerWrapper>
+      </ThemeWrapper>
+    </BrowserRouter>
   </React.StrictMode>,
 );
 

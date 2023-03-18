@@ -1,10 +1,12 @@
 import { Button, Snackbar } from '@mui/material';
-import React, { Fragment, PropsWithChildren, useCallback } from 'react';
+import { Fragment, PropsWithChildren, useCallback } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import { useServiceWorker } from '../../hooks/useServiceWorker';
 
 const ServiceWorkerWrapper = ({ children }: PropsWithChildren) => {
   const { canUpdate, onUpdateAppVersion } = useServiceWorker();
+  const navigate = useNavigate();
 
   const handleRefreshApp = useCallback(
     (viewChanges: boolean = false) => {
@@ -13,11 +15,11 @@ const ServiceWorkerWrapper = ({ children }: PropsWithChildren) => {
       }
 
       onUpdateAppVersion();
-      if (viewChanges && typeof window !== 'undefined') {
-        window.open('/changes', '_blank');
+      if (viewChanges) {
+        navigate('/changes');
       }
     },
-    [canUpdate, onUpdateAppVersion],
+    [canUpdate, onUpdateAppVersion, navigate],
   );
 
   return (

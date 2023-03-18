@@ -1,3 +1,9 @@
+## [2.1.2] - 2023-03-18
+
+### Fixed
+
+- Clicking "Changes" when notified of a new app version works as expected
+
 ## [2.1.1] - 2023-03-18
 
 ### Added
