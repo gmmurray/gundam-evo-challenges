@@ -1,3 +1,9 @@
+## [2.1.1] - 2023-03-18
+
+### Added
+
+- Added Sazabi, Asshimar, Dom Trooper, Heavyarms unit grouping
+
 ## [2.1.0] - 2023-03-18
 
 ### Changed
