@@ -7,10 +7,16 @@ import { getUnitsFromGrouping } from '../../helpers/unitHelpers';
 type Props = {
   grouping: UnitGrouping;
   viewEnabled?: boolean;
+  recommendations?: string[];
 };
 
-const UnitGroupingDisplay = ({ grouping, viewEnabled = false }: Props) => {
+const UnitGroupingDisplay = ({
+  grouping,
+  viewEnabled = false,
+  recommendations = [],
+}: Props) => {
   const units = getUnitsFromGrouping(grouping);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Grid container sx={{ justifyContent: 'space-around' }}>
@@ -25,7 +31,13 @@ const UnitGroupingDisplay = ({ grouping, viewEnabled = false }: Props) => {
                 textAlign: 'center',
               }}
             >
-              <UnitAvatar unit={unit} viewEnabled={viewEnabled} />
+              <UnitAvatar
+                unit={unit}
+                viewEnabled={viewEnabled}
+                recommendationPosition={recommendations.findIndex(
+                  id => id === unit.id,
+                )}
+              />
             </Grid>
           );
         })}

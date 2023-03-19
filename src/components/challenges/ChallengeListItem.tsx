@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
 import { challengeTypes } from '../../data/challengeTypes';
+import { useRecommendationContext } from '../../contexts/recommendations/RecommendationContext';
 
 type Props = {
   challenge: ChallengeProgress;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 const ChallengeListItem = ({ challenge, onChange }: Props) => {
+  const { recommendations } = useRecommendationContext();
   const challengeType = challengeTypes[challenge.type];
   const isComplete = challenge.total === challenge.progress;
 
@@ -79,6 +81,7 @@ const ChallengeListItem = ({ challenge, onChange }: Props) => {
               <UnitGroupingDisplay
                 grouping={challenge.grouping}
                 viewEnabled={true}
+                recommendations={isComplete ? [] : recommendations}
               />
             </Grid>
           </Grid>

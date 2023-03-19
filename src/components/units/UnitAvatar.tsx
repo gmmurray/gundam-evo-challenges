@@ -1,22 +1,47 @@
-import { Avatar, IconButton, Tooltip } from '@mui/material';
+import { Avatar, IconButton, Tooltip, useTheme } from '@mui/material';
 
 import { PropsWithChildren } from 'react';
 import { Unit } from '../../data/units';
 import { getUnitAvatarUrl } from '../../helpers/unitHelpers';
 import { useViewUnitContext } from '../../contexts/viewUnit/viewUnitContext';
 
+const recBorderLookup: Record<number, 'error' | 'warning' | 'success'> = {
+  0: 'error',
+  1: 'warning',
+  2: 'success',
+};
+
 type Props = {
   unit: Unit;
   viewEnabled?: boolean;
+  recommendationPosition?: number;
 };
 
-const UnitAvatar = ({ unit, viewEnabled = false }: Props) => {
+const UnitAvatar = ({
+  unit,
+  viewEnabled = false,
+  recommendationPosition = -1,
+}: Props) => {
+  const theme = useTheme();
   const avatarUrl = getUnitAvatarUrl(unit);
+  const avatarBorder =
+    recommendationPosition === -1
+      ? undefined
+      : `2px solid ${
+          theme.palette[recBorderLookup[recommendationPosition]].main
+        }`;
+
   return (
     <Tooltip key={unit.id} title={unit.name} followCursor>
       <span>
         <Wrapper unit={unit} viewEnabled={viewEnabled}>
-          <Avatar src={avatarUrl} sx={{}} sizes="large" />
+          <Avatar
+            src={avatarUrl}
+            sizes="large"
+            sx={{
+              border: avatarBorder,
+            }}
+          />
         </Wrapper>
       </span>
     </Tooltip>
@@ -29,7 +54,7 @@ const Wrapper = ({
   unit,
   viewEnabled,
   children,
-}: Props & PropsWithChildren) => {
+}: Omit<Props, 'recommendationPosition'> & PropsWithChildren) => {
   const { toggleUnit } = useViewUnitContext();
   if (!viewEnabled) {
     return <span>{children}</span>;
