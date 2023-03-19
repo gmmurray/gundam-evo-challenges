@@ -60,15 +60,20 @@ const ChallengeEditor = ({ onSave, resetType }: Props) => {
       setChallenge(state => {
         const newState = { ...state, [key]: value };
 
-        if (getCanSave(newState)) {
-          handleSave(newState);
-        }
         return newState;
       });
     },
-    [handleSave],
+    [],
   );
 
+  // set challenge whenever the components of the challenge have been properly selected
+  useEffect(() => {
+    if (getCanSave(challenge)) {
+      handleSave(challenge);
+    }
+  }, [challenge, handleSave]);
+
+  // if the challenge type changes, change the total to the default for that type
   useEffect(() => {
     if (challenge.type) {
       setChallenge(state => ({
