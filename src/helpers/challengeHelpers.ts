@@ -30,16 +30,14 @@ export const getIncompleteChallengeUnits = (challenges: ChallengeProgress[]) =>
 // given a list of challenges, create a map where the key is the unitId and the value is
 // a list of total progress required for each challenge type
 export const createUnitChallengeMap = (challenges: ChallengeProgress[]) => {
-  const unitIds = [...new Set(getIncompleteChallengeUnits(challenges))];
+  const unitIds = getIncompleteChallengeUnits(challenges);
 
   const result: UnitChallengeSummary = {};
 
-  for (let i = 0; i < unitIds.length - 1; i++) {
-    const unitId = unitIds[i];
-    for (let j = 0; j < challenges.length - 1; j++) {
-      const challenge = challenges[j];
+  unitIds.forEach(unitId => {
+    challenges.forEach(challenge => {
       if (!challenge.grouping.includes(unitId)) {
-        continue;
+        return;
       }
 
       if (!result[unitId]) {
@@ -55,8 +53,8 @@ export const createUnitChallengeMap = (challenges: ChallengeProgress[]) => {
 
       result[unitId][challenge.type].progress += challenge.progress;
       result[unitId][challenge.type].total += challenge.total;
-    }
-  }
+    });
+  });
 
   return result;
 };

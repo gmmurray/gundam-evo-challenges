@@ -1,3 +1,7 @@
+## [2.3.2] - 2023-03-20
+### Fixed
+- Summary units would not always accurately represent all units with challenges
+
 ## [2.3.1] - 2023-03-20
 ### Added
 - Feedback form
