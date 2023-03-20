@@ -2,7 +2,6 @@ import { Fragment, useState } from 'react';
 
 import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import ManageUnitsDialog from '../units/ManageUnitsDialog';
 import Typography from '@mui/material/Typography';
 
@@ -24,7 +23,6 @@ const HeaderSection = () => {
             Units
           </Button>
         </Box>
-        <Divider sx={{ mb: 2 }} />
       </Box>
       <ManageUnitsDialog
         open={dialogOpen}

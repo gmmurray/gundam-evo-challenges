@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import PersonalDetailsProvider from './contexts/personal/PersonalDetailsProvider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RecommendationProvider } from './contexts/recommendations/RecommendationContext';
 import ServiceWorkerWrapper from './components/layout/ServiceWorkerWrapper';
 import StorageProvider from './contexts/storage/StorageProvider';
 import ThemeWrapper from './theme/ThemeWrapper';
@@ -25,15 +24,13 @@ root.render(
           <PersonalDetailsProvider>
             <CssBaseline />
             <StorageProvider>
-              <RecommendationProvider>
-                <ViewUnitProvider>
-                  <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/changes" element={<Changes />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                  </Routes>
-                </ViewUnitProvider>
-              </RecommendationProvider>
+              <ViewUnitProvider>
+                <Routes>
+                  <Route path="/" element={<App />} />
+                  <Route path="/changes" element={<Changes />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </ViewUnitProvider>
             </StorageProvider>
           </PersonalDetailsProvider>
         </ServiceWorkerWrapper>

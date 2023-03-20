@@ -101,14 +101,16 @@ const ChallengesSection = ({
         </Box>
       </Box>
       <Collapse in={!hideSection} timeout={500}>
-        <List sx={{ pl: 3 }}>
+        <List>
           {[...Array(challengeCount)].map((_, index) => {
+            const isLast = index === challengeCount - 1;
             if (challenges[index]) {
               return (
                 <ChallengeListItem
                   key={index}
                   challenge={challenges[index]}
                   onChange={challenge => handleUpdate(index, challenge)}
+                  divider={!isLast}
                 />
               );
             } else {
@@ -117,6 +119,7 @@ const ChallengesSection = ({
                   key={index}
                   resetType={storageKey}
                   onSave={challenge => handleUpdate(index, challenge)}
+                  divider={!isLast}
                 />
               );
             }

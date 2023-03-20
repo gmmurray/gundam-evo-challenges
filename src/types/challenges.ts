@@ -14,3 +14,13 @@ export type ChallengeType = {
 };
 
 export type ChallengesStorageKey = 'dailies' | 'weeklies';
+
+export type ChallengeSummary = Record<
+  string,
+  {
+    progress: number;
+    total: number;
+  }
+>;
+
+export type UnitChallengeSummary = Record<string, ChallengeSummary>;

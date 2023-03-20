@@ -31,7 +31,7 @@ const Changes = () => {
     getMarkdown();
   }, []);
   return (
-    <Container maxWidth="md" sx={{ my: 4 }}>
+    <Container maxWidth="lg" sx={{ my: 4 }}>
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Box>

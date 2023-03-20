@@ -18,9 +18,10 @@ import { useRecommendationContext } from '../../contexts/recommendations/Recomme
 type Props = {
   challenge: ChallengeProgress;
   onChange: (value?: ChallengeProgress) => void;
+  divider: boolean;
 };
 
-const ChallengeListItem = ({ challenge, onChange }: Props) => {
+const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
   const { recommendations } = useRecommendationContext();
   const challengeType = challengeTypes[challenge.type];
   const isComplete = challenge.total === challenge.progress;
@@ -45,7 +46,7 @@ const ChallengeListItem = ({ challenge, onChange }: Props) => {
   return (
     <Fragment>
       <ListItem
-        divider
+        divider={divider}
         className={isComplete ? 'Mui-selected' : undefined}
         secondaryAction={
           <Tooltip title={isComplete ? 'Remove' : 'Increment'}>

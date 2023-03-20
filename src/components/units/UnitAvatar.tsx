@@ -15,12 +15,14 @@ type Props = {
   unit: Unit;
   viewEnabled?: boolean;
   recommendationPosition?: number;
+  size?: 'normal' | 'large';
 };
 
 const UnitAvatar = ({
   unit,
   viewEnabled = false,
   recommendationPosition = -1,
+  size = 'normal',
 }: Props) => {
   const theme = useTheme();
   const avatarUrl = getUnitAvatarUrl(unit);
@@ -40,6 +42,8 @@ const UnitAvatar = ({
             sizes="large"
             sx={{
               border: avatarBorder,
+              height: size === 'large' ? '75px' : undefined,
+              width: size === 'large' ? '75px' : undefined,
             }}
           />
         </Wrapper>

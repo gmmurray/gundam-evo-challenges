@@ -1,5 +1,6 @@
 import {
   Box,
+  Grid,
   LinearProgress,
   LinearProgressProps,
   Typography,
@@ -9,21 +10,23 @@ const LinearProgressWithLabel = (
   props: LinearProgressProps & { numerator: number; denominator: number },
 ) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress
-          variant="determinate"
-          {...props}
-          value={(props.numerator / props.denominator) * 100}
-        />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
+    <Grid container spacing={1}>
+      <Grid item xs sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress
+            variant="determinate"
+            {...props}
+            value={(props.numerator / props.denominator) * 100}
+          />
+        </Box>
+      </Grid>
+      <Grid item xs="auto" sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography
-          variant="body2"
+          variant="overline"
           color="text.secondary"
         >{`${props.numerator.toLocaleString()}/${props.denominator.toLocaleString()}`}</Typography>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 export default LinearProgressWithLabel;

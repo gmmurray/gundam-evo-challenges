@@ -1,3 +1,9 @@
+## [2.3.0] - 2023-03-20
+### Added
+- 🚨SUMMARY SECTION🚨 This section shows your challenges by unit. Simply set up your challenges on the "List" tab then switch to the "Summary" tab to view your progress for each mobile suit!
+### Changed
+- UX improvements on list tab
+
 ## [2.2.0] - 2023-03-18
 ### Added
 - Unit recommendations based off how many challenges each unit appears in

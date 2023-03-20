@@ -34,9 +34,10 @@ const getCanSave = (challenge: Partial<ChallengeProgress>) =>
 type Props = {
   onSave: (value: ChallengeProgress) => void;
   resetType: ChallengesStorageKey;
+  divider: boolean;
 };
 
-const ChallengeEditor = ({ onSave, resetType }: Props) => {
+const ChallengeEditor = ({ onSave, resetType, divider }: Props) => {
   const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>({});
   const [unitsDialogOpen, setUnitsDialogOpen] = useState(false);
   const [customAmountDialogOpen, setCustomAmountDialogOpen] = useState(false);
@@ -129,7 +130,7 @@ const ChallengeEditor = ({ onSave, resetType }: Props) => {
             </IconButton>
           </Box>
         }
-        divider
+        divider={divider}
       >
         <ListItemText disableTypography>
           <Grid container spacing={2}>

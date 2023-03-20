@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import { ChallengeProgress } from '../../types/challenges';
+import { getIncompleteChallengeUnits } from '../../helpers/challengeHelpers';
 import { useStorageContext } from '../storage/storageContext';
 
 export type RecommendationContextValue = {
@@ -25,12 +25,6 @@ export const RecommendationContext = createContext<RecommendationContextValue>(
 export const useRecommendationContext = () => useContext(RecommendationContext);
 
 const RECOMMENDATION_COUNT = 3;
-
-const getIncompleteChallengeUnits = (challenges: ChallengeProgress[]) =>
-  challenges
-    .filter(c => c.progress < c.total)
-    .map(c => c.grouping)
-    .flat();
 
 export const RecommendationProvider = ({ children }: PropsWithChildren) => {
   const {
