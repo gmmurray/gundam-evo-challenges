@@ -1,3 +1,7 @@
+## [2.3.1] - 2023-03-20
+### Added
+- Feedback form
+
 ## [2.3.0] - 2023-03-20
 ### Added
 - 🚨SUMMARY SECTION🚨 This section shows your challenges by unit. Simply set up your challenges on the "List" tab then switch to the "Summary" tab to view your progress for each mobile suit!
