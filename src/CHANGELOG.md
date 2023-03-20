@@ -1,3 +1,7 @@
+## [2.3.3] - 2023-03-20
+### Added
+- Added Pale Rider, GM, Turn A, Hyperion Gundam grouping
+
 ## [2.3.2] - 2023-03-20
 ### Fixed
 - Summary units would not always accurately represent all units with challenges
