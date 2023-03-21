@@ -30,7 +30,7 @@ export const getIncompleteChallengeUnits = (challenges: ChallengeProgress[]) =>
 // given a list of challenges, create a map where the key is the unitId and the value is
 // a list of total progress required for each challenge type
 export const createUnitChallengeMap = (challenges: ChallengeProgress[]) => {
-  const unitIds = getIncompleteChallengeUnits(challenges);
+  const unitIds = [...new Set(getIncompleteChallengeUnits(challenges))];
 
   const result: UnitChallengeSummary = {};
 
