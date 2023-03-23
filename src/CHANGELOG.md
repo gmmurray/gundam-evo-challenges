@@ -1,3 +1,7 @@
+## [2.3.4] - 2023-03-22
+### Changed
+- Recommended unit colors are now gold/silver/bronze
+  
 ## [2.3.3] - 2023-03-20
 ### Added
 - Added Pale Rider, GM, Turn A, Hyperion Gundam grouping

@@ -23,7 +23,7 @@ function App() {
     <Container maxWidth="lg" sx={{ my: 4 }}>
       <HeaderSection />
       <TabContext value={currentTab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb:2 }}>
           <TabList
             onChange={handleTabChange}
             sx={{ '& .MuiTabs-flexContainer': { paddingTop: 2 } }}

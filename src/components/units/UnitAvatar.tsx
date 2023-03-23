@@ -5,10 +5,10 @@ import { Unit } from '../../data/units';
 import { getUnitAvatarUrl } from '../../helpers/unitHelpers';
 import { useViewUnitContext } from '../../contexts/viewUnit/viewUnitContext';
 
-const recBorderLookup: Record<number, 'error' | 'warning' | 'success'> = {
-  0: 'error',
-  1: 'warning',
-  2: 'success',
+const recBorderLookup: Record<number, 'gold' | 'silver' | 'bronze'> = {
+  0: 'gold',
+  1: 'silver',
+  2: 'bronze',
 };
 
 type Props = {
@@ -29,9 +29,7 @@ const UnitAvatar = ({
   const avatarBorder =
     recommendationPosition === -1
       ? undefined
-      : `2px solid ${
-          theme.palette[recBorderLookup[recommendationPosition]].main
-        }`;
+      : `2px solid ${theme.medals[recBorderLookup[recommendationPosition]]}`;
 
   return (
     <Tooltip key={unit.id} title={unit.name} followCursor>
