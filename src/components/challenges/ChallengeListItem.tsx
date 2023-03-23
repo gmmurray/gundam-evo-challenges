@@ -100,7 +100,7 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
           <Grid item xs="auto">
             <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
               {isComplete ? (
-                <IconButton edge="end" onClick={handleClear}>
+                <IconButton onClick={handleClear}>
                   <DeleteIcon />
                 </IconButton>
               ) : (
