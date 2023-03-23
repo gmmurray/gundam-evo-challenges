@@ -1,5 +1,5 @@
 import { Fragment, useCallback } from 'react';
-import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItem, ListItemIcon, Stack } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import { ChallengeProgress } from '../../types/challenges';
@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import LinearProgressWithLabel from '../material/LinearProgressWithLabel';
-import Tooltip from '@mui/material/Tooltip';
+import RemoveIcon from '@mui/icons-material/Remove';
 import Typography from '@mui/material/Typography';
 import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
 import { challengeTypes } from '../../data/challengeTypes';
@@ -25,6 +25,8 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
   const { recommendations } = useRecommendationContext();
   const challengeType = challengeTypes[challenge.type];
   const isComplete = challenge.total === challenge.progress;
+  const canIncrement = !isComplete;
+  const canDecrement = challenge.progress > 0;
 
   const handleComplete = useCallback(() => {
     const progress = isComplete ? 0 : challenge.total;
@@ -32,12 +34,19 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
     onChange({ ...challenge, progress });
   }, [challenge, isComplete, onChange]);
 
-  const handleIncrement = useCallback(() => {
-    onChange({
-      ...challenge,
-      progress: challengeType.increment(challenge.progress, challenge.total),
-    });
-  }, [challenge, challengeType, onChange]);
+  const handleUpdateProgress = useCallback(
+    (isIncrement: boolean) => {
+      onChange({
+        ...challenge,
+        progress: challengeType.updateProgress(
+          challenge.progress,
+          challenge.total,
+          isIncrement,
+        ),
+      });
+    },
+    [challenge, challengeType, onChange],
+  );
 
   const handleClear = useCallback(() => {
     onChange(undefined);
@@ -48,18 +57,6 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
       <ListItem
         divider={divider}
         className={isComplete ? 'Mui-selected' : undefined}
-        secondaryAction={
-          <Tooltip title={isComplete ? 'Remove' : 'Increment'}>
-            <span>
-              <IconButton
-                edge="end"
-                onClick={isComplete ? handleClear : handleIncrement}
-              >
-                {isComplete ? <DeleteIcon /> : <AddIcon />}
-              </IconButton>
-            </span>
-          </Tooltip>
-        }
         sx={{
           my: 1,
         }}
@@ -69,24 +66,64 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
             {isComplete ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
           </IconButton>
         </ListItemIcon>
-        <ListItemText disableTypography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md>
-              <Typography variant="body1">{challengeType.title}</Typography>
-              <LinearProgressWithLabel
-                numerator={challenge.progress}
-                denominator={challenge.total}
-              />
-            </Grid>
-            <Grid item xs={12} md="auto">
-              <UnitGroupingDisplay
-                grouping={challenge.grouping}
-                viewEnabled={true}
-                recommendations={isComplete ? [] : recommendations}
-              />
+        <Grid
+          container
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Grid item xs>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md>
+                <Typography variant="body1">{challengeType.title}</Typography>
+                <LinearProgressWithLabel
+                  numerator={challenge.progress}
+                  denominator={challenge.total}
+                />
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <UnitGroupingDisplay
+                  grouping={challenge.grouping}
+                  viewEnabled={true}
+                  recommendations={isComplete ? [] : recommendations}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </ListItemText>
+          <Grid item xs="auto">
+            <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+              {isComplete ? (
+                <IconButton edge="end" onClick={handleClear}>
+                  <DeleteIcon />
+                </IconButton>
+              ) : (
+                <Stack direction="column">
+                  <IconButton
+                    onClick={() => handleUpdateProgress(true)}
+                    disabled={!canIncrement}
+                    size="medium"
+                  >
+                    <AddIcon fontSize="inherit" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => handleUpdateProgress(false)}
+                    disabled={!canDecrement}
+                    size="medium"
+                  >
+                    <RemoveIcon fontSize="inherit" />
+                  </IconButton>
+                </Stack>
+              )}
+            </Grid>
+          </Grid>
+        </Grid>
       </ListItem>
     </Fragment>
   );

@@ -12,7 +12,6 @@ import {
 } from '../../types/challenges';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
-import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -122,9 +121,6 @@ const ChallengeEditor = ({ onSave, resetType, divider }: Props) => {
       <ListItem
         secondaryAction={
           <Box>
-            <IconButton disabled={!getCanSave(challenge)} onClick={handleSave}>
-              <CheckIcon />
-            </IconButton>
             <IconButton onClick={handleReset}>
               <ClearIcon />
             </IconButton>

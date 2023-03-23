@@ -1,3 +1,7 @@
+## [2.3.5] - 2023-03-23
+### Added
+- Increment *and* decrement challenge progress
+
 ## [2.3.4] - 2023-03-22
 ### Changed
 - Recommended unit colors are now gold/silver/bronze

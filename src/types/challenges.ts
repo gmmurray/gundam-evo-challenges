@@ -9,7 +9,7 @@ export type ChallengeProgress = {
 
 export type ChallengeType = {
   title: string;
-  increment: (prev: number, total: number) => number;
+  updateProgress: (prev: number, total: number, isIncrement: boolean) => number;
   options: number[];
 };
 
