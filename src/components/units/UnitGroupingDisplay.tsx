@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material';
 
+import { RecommendationContextValue } from '../../contexts/recommendations/RecommendationContext';
 import UnitAvatar from './UnitAvatar';
 import { UnitGrouping } from '../../data/unitGroupings';
 import { getUnitsFromGrouping } from '../../helpers/unitHelpers';
@@ -7,7 +8,7 @@ import { getUnitsFromGrouping } from '../../helpers/unitHelpers';
 type Props = {
   grouping: UnitGrouping;
   viewEnabled?: boolean;
-  recommendations?: string[];
+  recommendations?: RecommendationContextValue['recommendations'];
 };
 
 const UnitGroupingDisplay = ({
@@ -34,8 +35,8 @@ const UnitGroupingDisplay = ({
               <UnitAvatar
                 unit={unit}
                 viewEnabled={viewEnabled}
-                recommendationPosition={recommendations.findIndex(
-                  id => id === unit.id,
+                recommendationPosition={recommendations.findIndex(rec =>
+                  rec.units.includes(unit.id),
                 )}
               />
             </Grid>

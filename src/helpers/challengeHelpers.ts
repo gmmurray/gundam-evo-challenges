@@ -1,10 +1,13 @@
 import {
   ChallengeProgress,
   ChallengesStorageKey,
+  SummarySortOptions,
   UnitChallengeSummary,
+  UnitSummaryRecord,
 } from '../types/challenges';
 
 import { challengeTypes } from '../data/challengeTypes';
+import { unitOptions } from '../data/units';
 
 export const getDefaultChallengeTotal = (
   resetType: ChallengesStorageKey,
@@ -57,4 +60,64 @@ export const createUnitChallengeMap = (challenges: ChallengeProgress[]) => {
   });
 
   return result;
+};
+
+export const getSummaryRecordsFromMap = (
+  summary: UnitChallengeSummary,
+): UnitSummaryRecord[] =>
+  Object.keys(summary).map(key => ({
+    unitId: key,
+    summary: summary[key],
+  }));
+
+const searchSummaryRecords = (
+  summaries: UnitSummaryRecord[],
+  search: string,
+) => {
+  let result: UnitSummaryRecord[];
+
+  if (search === '') {
+    result = summaries;
+  } else {
+    result = summaries.filter(s => {
+      const name = unitOptions[s.unitId].name.toLocaleLowerCase();
+      return name.includes(search.toLocaleLowerCase());
+    });
+  }
+
+  return result;
+};
+
+const sortSummaryRecords = (
+  summaries: UnitSummaryRecord[],
+  { sort, order }: SummarySortOptions,
+): UnitSummaryRecord[] => {
+  const result = [...summaries];
+  const condition = (a: UnitSummaryRecord, b: UnitSummaryRecord) => {
+    if (sort === 'challengeCount') {
+      return Object.values(a.summary).length > Object.values(b.summary).length;
+    } else {
+      return unitOptions[a.unitId].name > unitOptions[b.unitId].name;
+    }
+  };
+
+  result.sort((a, b) => {
+    let sortResult = condition(a, b) ? 1 : -1;
+    if (order === 'desc') {
+      sortResult *= -1;
+    }
+    return sortResult;
+  });
+
+  return result;
+};
+
+export const searchAndSortSummaryRecords = (
+  summaries: UnitSummaryRecord[],
+  search: string,
+  sortOptions: SummarySortOptions,
+): UnitSummaryRecord[] => {
+  const searched = searchSummaryRecords(summaries, search);
+  const sorted = sortSummaryRecords(searched, sortOptions);
+  return [...sorted];
 };

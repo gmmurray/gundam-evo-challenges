@@ -11,6 +11,7 @@ export type ChallengeType = {
   title: string;
   updateProgress: (prev: number, total: number, isIncrement: boolean) => number;
   options: number[];
+  shortTitle: string;
 };
 
 export type ChallengesStorageKey = 'dailies' | 'weeklies';
@@ -24,3 +25,13 @@ export type ChallengeSummary = Record<
 >;
 
 export type UnitChallengeSummary = Record<string, ChallengeSummary>;
+
+export type UnitSummaryRecord = {
+  unitId: string;
+  summary: ChallengeSummary;
+};
+
+export type SummarySortOptions = {
+  sort: 'name' | 'challengeCount';
+  order: 'asc' | 'desc';
+};

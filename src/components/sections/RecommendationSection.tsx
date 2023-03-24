@@ -1,6 +1,6 @@
 import { Box, Fade, Grid, Paper, Typography } from '@mui/material';
 
-import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
+import RecommendedUnitDisplay from '../units/RecommendedUnitDisplay';
 import { useRecommendationContext } from '../../contexts/recommendations/RecommendationContext';
 
 const RecommendationSection = () => {
@@ -31,11 +31,19 @@ const RecommendationSection = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} md="auto" sx={{ ml: 'auto' }}>
-            <UnitGroupingDisplay
-              grouping={recommendations}
-              recommendations={recommendations}
-              viewEnabled
-            />
+            <Grid container spacing={1}>
+              {recommendations.map((group, index) => {
+                return (
+                  <Grid item key={index} xs>
+                    <RecommendedUnitDisplay
+                      count={group.challenges}
+                      units={group.units}
+                      position={index}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
           </Grid>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

@@ -1,7 +1,6 @@
-import { Box, Fade, Grid, Paper, Typography } from '@mui/material';
+import { Fade, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 
 import { ChallengeSummary } from '../../types/challenges';
-import LinearProgressWithLabel from '../material/LinearProgressWithLabel';
 import UnitAvatar from './UnitAvatar';
 import { challengeTypes } from '../../data/challengeTypes';
 import { unitOptions } from '../../data/units';
@@ -14,7 +13,9 @@ type Props = {
 const UnitSummary = ({ unitId, summary }: Props) => {
   return (
     <Fade in timeout={250}>
-      <Paper sx={{ my: 1, p: 2 }}>
+      <Paper
+        sx={{ height: '100%', p: 2, display: 'flex', alignItems: 'center' }}
+      >
         <Grid container spacing={2}>
           <Grid
             item
@@ -39,25 +40,64 @@ const UnitSummary = ({ unitId, summary }: Props) => {
               justifyContent: 'center',
             }}
           >
-            {Object.keys(summary).map(key => {
-              const { progress, total } = summary[key];
-              const { title } = challengeTypes[key];
+            {Object.keys(summary)
+              // sort challenge types for a single unit first by completion %, then by name
+              .sort((a, b) => {
+                const { progress: progressA, total: totalA } = summary[a];
+                const { progress: progressB, total: totalB } = summary[b];
 
-              return (
-                <Box
-                  sx={{ display: 'flex', flexDirection: 'column' }}
-                  key={key}
-                >
-                  <Typography variant="body1" sx={{ lineHeight: 'unset' }}>
-                    {title}
-                  </Typography>
-                  <LinearProgressWithLabel
-                    numerator={progress}
-                    denominator={total}
-                  />
-                </Box>
-              );
-            })}
+                if (progressA / totalA > progressB / totalB) {
+                  return -1;
+                } else if (progressB / totalB > progressA / totalA) {
+                  return 1;
+                } else {
+                  return challengeTypes[a].shortTitle >
+                    challengeTypes[b].shortTitle
+                    ? 1
+                    : -1;
+                }
+              })
+              .map(key => {
+                const { progress, total } = summary[key];
+                const { shortTitle } = challengeTypes[key];
+
+                return (
+                  <Grid container key={key}>
+                    <Grid item xs>
+                      <Typography variant="body1" sx={{ lineHeight: 'unset' }}>
+                        {shortTitle}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs="auto"
+                      sx={{ display: 'flex', justifyContent: 'end' }}
+                    >
+                      <Typography variant="body2">
+                        {progress.toLocaleString()} / {total.toLocaleString()}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={{ mb: 2 }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={(progress / total) * 100}
+                      />
+                    </Grid>
+                  </Grid>
+                  // <Box
+                  //   sx={{ display: 'flex', flexDirection: 'column' }}
+                  //   key={key}
+                  // >
+                  //   <Typography variant="body1" sx={{ lineHeight: 'unset' }}>
+                  //     {shortTitle}
+                  //   </Typography>
+                  //   <LinearProgressWithLabel
+                  //     numerator={progress}
+                  //     denominator={total}
+                  //   />
+                  // </Box>
+                );
+              })}
           </Grid>
         </Grid>
       </Paper>

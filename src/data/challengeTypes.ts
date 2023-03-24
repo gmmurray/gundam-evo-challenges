@@ -25,40 +25,48 @@ export const challengeTypes: Record<string, ChallengeType> = {
     title: 'Win matches',
     updateProgress: incrementByOne,
     options: [1, 7],
+    shortTitle: 'Wins',
   },
   damage: {
     title: 'Inflict damage',
     updateProgress: incrementByThousands,
     options: [20000, 100000],
+    shortTitle: 'Damage',
   },
   revives: {
     title: 'Revive teammates',
     updateProgress: incrementByOne,
     options: [1, 5],
+    shortTitle: 'Revives',
   },
   games: {
     title: 'Play matches',
     updateProgress: incrementByOne,
     options: [2, 15],
+    shortTitle: 'Games',
   },
   crits: {
     title: 'Get critical hit kills',
     updateProgress: incrementByOne,
     options: [1, 5],
+    shortTitle: 'Crit kills',
   },
   repair: {
     title: 'Repair HP for self or team members',
     updateProgress: incrementByThousands,
     options: [2500, 10000],
+    shortTitle: 'Heals',
   },
   kills: {
     title: 'Kills',
     updateProgress: incrementByOne,
     options: [5, 30],
+    shortTitle: 'Kills',
   },
   gman: {
     title: 'Use G-Maneuver',
     updateProgress: incrementByOne,
     options: [3, 20],
+    shortTitle: 'G-Maneuvers',
   },
 };

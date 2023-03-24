@@ -8,10 +8,11 @@ import {
 } from 'react';
 
 import { getIncompleteChallengeUnits } from '../../helpers/challengeHelpers';
+import { unitOptions } from '../../data/units';
 import { useStorageContext } from '../storage/storageContext';
 
 export type RecommendationContextValue = {
-  recommendations: string[];
+  recommendations: { challenges: number; units: string[] }[];
 };
 
 export const defaultRecommendationContextValue: RecommendationContextValue = {
@@ -48,17 +49,35 @@ export const RecommendationProvider = ({ children }: PropsWithChildren) => {
     setUnitMap(map);
   }, [dailies, weeklies]);
 
-  const orderedUnits = useMemo(
-    () =>
-      Object.keys(unitMap)
-        .sort((a, b) => (unitMap[a] > unitMap[b] ? -1 : 1))
-        .slice(0, RECOMMENDATION_COUNT)
-        .filter(key => unitMap[key] > 1),
-    [unitMap],
-  );
+  const recommendations = useMemo(() => {
+    const map = new Map<number, string[]>();
+    Object.keys(unitMap).forEach(key => {
+      const count = unitMap[key];
+      if (count <= 1) {
+        return;
+      }
+      if (!map.has(count)) {
+        map.set(count, []);
+      }
+
+      map.set(count, [...(map.get(count) ?? []), key]);
+    });
+    return [...map.entries()]
+      .sort((a, b) => (a[0] > b[0] ? -1 : 1))
+      .map(entry => ({
+        challenges: entry[0],
+        units: entry[1].sort((a, b) =>
+          unitOptions[a].name.toLocaleLowerCase() >
+          unitOptions[b].name.toLocaleLowerCase()
+            ? 1
+            : -1,
+        ),
+      }))
+      .slice(0, RECOMMENDATION_COUNT);
+  }, [unitMap]);
 
   const contextValue: RecommendationContextValue = {
-    recommendations: orderedUnits,
+    recommendations,
   };
 
   return (
