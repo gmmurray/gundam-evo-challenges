@@ -1,3 +1,7 @@
+## [2.4.1] - 2023-03-28
+### Added
+- Unit grouping for Pale Rider, Turn A, GM Sniper, Nu Gundam
+---
 ## [2.4.0] - 2023-03-23
 ### Changed
 - Recommended units are all shown now rather than just the top 3. The first shown and then you can hover/tap to see the full list.
