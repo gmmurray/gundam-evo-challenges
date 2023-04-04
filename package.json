@@ -1,6 +1,6 @@
 {
   "name": "gundam-evo-challenges",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",

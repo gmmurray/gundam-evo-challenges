@@ -1,3 +1,7 @@
+## [2.4.2] - 2023-04-04
+### Added
+- Unit grouping for Pale Rider, Gundam, Sazabi, Marasai
+---
 ## [2.4.1] - 2023-03-28
 ### Added
 - Unit grouping for Pale Rider, Turn A, GM Sniper, Nu Gundam
