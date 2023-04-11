@@ -18,10 +18,16 @@ import { useRecommendationContext } from '../../contexts/recommendations/Recomme
 type Props = {
   challenge: ChallengeProgress;
   onChange: (value?: ChallengeProgress) => void;
+  onClear: () => any;
   divider: boolean;
 };
 
-const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
+const ChallengeListItem = ({
+  challenge,
+  onChange,
+  onClear,
+  divider,
+}: Props) => {
   const { recommendations } = useRecommendationContext();
   const challengeType = challengeTypes[challenge.type];
   const isComplete = challenge.total === challenge.progress;
@@ -49,8 +55,8 @@ const ChallengeListItem = ({ challenge, onChange, divider }: Props) => {
   );
 
   const handleClear = useCallback(() => {
-    onChange(undefined);
-  }, [onChange]);
+    onClear();
+  }, [onClear]);
 
   return (
     <Fragment>

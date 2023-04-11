@@ -17,6 +17,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitleWithClose from '../material/DialogTitleWithClose';
+import RestoreIcon from '@mui/icons-material/Restore';
 import SelectMenu from '../material/SelectMenu';
 import TextField from '@mui/material/TextField';
 import { UnitGrouping } from '../../data/unitGroupings';
@@ -34,9 +35,17 @@ type Props = {
   onSave: (value: ChallengeProgress) => void;
   resetType: ChallengesStorageKey;
   divider: boolean;
+  undoProgress?: ChallengeProgress;
+  onUndo: () => any;
 };
 
-const ChallengeEditor = ({ onSave, resetType, divider }: Props) => {
+const ChallengeEditor = ({
+  onSave,
+  onUndo,
+  undoProgress,
+  resetType,
+  divider,
+}: Props) => {
   const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>({});
   const [unitsDialogOpen, setUnitsDialogOpen] = useState(false);
   const [customAmountDialogOpen, setCustomAmountDialogOpen] = useState(false);
@@ -116,13 +125,15 @@ const ChallengeEditor = ({ onSave, resetType, divider }: Props) => {
     handleCloseCustomAmount();
   }, [customAmount, handleCloseCustomAmount, handleUpdate]);
 
+  const canUndo = !!undoProgress && Object.keys(challenge).length === 0;
+
   return (
     <Fragment>
       <ListItem
         secondaryAction={
           <Box>
-            <IconButton onClick={handleReset}>
-              <ClearIcon />
+            <IconButton onClick={canUndo ? onUndo : handleReset}>
+              {canUndo ? <RestoreIcon /> : <ClearIcon />}
             </IconButton>
           </Box>
         }

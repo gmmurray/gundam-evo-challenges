@@ -35,6 +35,9 @@ const ChallengesSection = ({
     updateChallenge,
     resetChallenges,
   } = useStorageContext();
+  const [undoState, setUndoState] = useState<
+    Record<number, ChallengeProgress | undefined>
+  >({});
 
   const challenges = storage[storageKey];
 
@@ -48,9 +51,12 @@ const ChallengesSection = ({
 
   const handleUpdate = useCallback(
     (key: number, challenge?: ChallengeProgress) => {
+      if (undoState[key]) {
+        setUndoState(state => ({ ...state, [key]: undefined }));
+      }
       updateChallenge(storageKey, key, challenge);
     },
-    [storageKey, updateChallenge],
+    [storageKey, undoState, updateChallenge],
   );
 
   const [hideSection, setHideSection] = useState(
@@ -71,6 +77,31 @@ const ChallengesSection = ({
   const handleToggleHidden = useCallback(
     () => setHideSection(state => !state),
     [],
+  );
+
+  const handleUndo = useCallback(
+    (index: number) => {
+      const challenge = undoState[index];
+      if (!challenge) {
+        return;
+      }
+
+      handleUpdate(index, challenge);
+    },
+    [undoState, handleUpdate],
+  );
+
+  const handleClearChallenge = useCallback(
+    (index: number) => {
+      const challenge = challenges[index];
+      if (!challenge) {
+        return;
+      }
+
+      handleUpdate(index, undefined);
+      setUndoState(state => ({ ...state, [index]: challenge }));
+    },
+    [challenges, handleUpdate],
   );
 
   // change color if less than 2 hours away
@@ -111,6 +142,7 @@ const ChallengesSection = ({
                   challenge={challenges[index]}
                   onChange={challenge => handleUpdate(index, challenge)}
                   divider={!isLast}
+                  onClear={() => handleClearChallenge(index)}
                 />
               );
             } else {
@@ -120,6 +152,8 @@ const ChallengesSection = ({
                   resetType={storageKey}
                   onSave={challenge => handleUpdate(index, challenge)}
                   divider={!isLast}
+                  undoProgress={undoState[index]}
+                  onUndo={() => handleUndo(index)}
                 />
               );
             }
