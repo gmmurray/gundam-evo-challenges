@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Badge, Box, Grid } from '@mui/material';
 import { Fragment, useState } from 'react';
 
 import Button from '@mui/material/Button';
@@ -39,9 +39,11 @@ const HeaderSection = () => {
               alignItems: 'center',
             }}
           >
-            <Button onClick={e => setThemeMenuAnchor(e.currentTarget)}>
-              Theme
-            </Button>
+            <Badge badgeContent="New" color="primary">
+              <Button onClick={e => setThemeMenuAnchor(e.currentTarget)}>
+                Theme
+              </Button>
+            </Badge>
             <Button sx={{ ml: 1 }} onClick={() => setDialogOpen(true)}>
               Units
             </Button>

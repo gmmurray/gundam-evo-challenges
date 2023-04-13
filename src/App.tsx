@@ -1,4 +1,4 @@
-import { Badge, Box, Fade, Tab } from '@mui/material';
+import { Box, Fade, Tab } from '@mui/material';
 import { SyntheticEvent, useCallback, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
@@ -23,20 +23,13 @@ function App() {
     <Container maxWidth="lg" sx={{ my: 4 }}>
       <HeaderSection />
       <TabContext value={currentTab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb:2 }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
           <TabList
             onChange={handleTabChange}
             sx={{ '& .MuiTabs-flexContainer': { paddingTop: 2 } }}
           >
             <Tab label="List" value="1" />
-            <Tab
-              label="Summary"
-              value="2"
-              component={Badge}
-              badgeContent="New"
-              color="primary"
-              sx={{ overflow: 'visible' }}
-            />
+            <Tab label="Summary" value="2" />
           </TabList>
         </Box>
         <RecommendationProvider>

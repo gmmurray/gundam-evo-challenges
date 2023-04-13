@@ -44,7 +44,9 @@ const ManageUnitsDialog = ({ open, onClose }: Props) => {
             If you are missing a group, you can add a custom group yourself. We
             will try to keep this list as up to date as possible.
           </Typography>
-          <Button onClick={() => setCreateDialogOpen(true)}>Add group</Button>
+          <Button onClick={() => setCreateDialogOpen(true)} variant="contained">
+            Add group
+          </Button>
           <Divider sx={{ my: 2 }} />
           <Box sx={{ p: 2 }}>
             <Typography variant="h6">Preset Groups</Typography>
