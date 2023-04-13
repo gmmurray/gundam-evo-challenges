@@ -36,7 +36,7 @@ const RecommendedUnitDisplay = ({ units, count, position }: Props) => {
                 key={index}
                 src={src}
                 sx={{
-                  backgroundColor: theme => theme.palette.background.default,
+                  backgroundColor: 'black',
                   borderColor: theme =>
                     `${theme.medals[recBorderLookup[position]]} !important`,
                 }}

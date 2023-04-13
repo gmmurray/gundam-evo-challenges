@@ -66,6 +66,13 @@ const StorageProvider = ({ children }: Props) => {
     [setLocalStorageState],
   );
 
+  const handleUpdateTheme = useCallback<StorageContextType['updateTheme']>(
+    theme => {
+      setLocalStorageState(state => ({ ...state, theme }));
+    },
+    [setLocalStorageState],
+  );
+
   const contextValue: StorageContextType = {
     localStorage: {
       ...localStorageState,
@@ -73,6 +80,7 @@ const StorageProvider = ({ children }: Props) => {
     updateChallenge: handleUpdateChallenge,
     resetChallenges: handleResetChallenges,
     updateUserGroupings: handleUpdateUserGroupings,
+    updateTheme: handleUpdateTheme,
   };
 
   return (

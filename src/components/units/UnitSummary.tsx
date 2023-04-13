@@ -81,21 +81,10 @@ const UnitSummary = ({ unitId, summary }: Props) => {
                       <LinearProgress
                         variant="determinate"
                         value={(progress / total) * 100}
+                        color="inherit"
                       />
                     </Grid>
                   </Grid>
-                  // <Box
-                  //   sx={{ display: 'flex', flexDirection: 'column' }}
-                  //   key={key}
-                  // >
-                  //   <Typography variant="body1" sx={{ lineHeight: 'unset' }}>
-                  //     {shortTitle}
-                  //   </Typography>
-                  //   <LinearProgressWithLabel
-                  //     numerator={progress}
-                  //     denominator={total}
-                  //   />
-                  // </Box>
                 );
               })}
           </Grid>

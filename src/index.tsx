@@ -5,12 +5,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App';
 import Changes from './Changes';
 import CssBaseline from '@mui/material/CssBaseline';
+import CustomThemeProvider from './theme/ThemeWrapper';
 import PersonalDetailsProvider from './contexts/personal/PersonalDetailsProvider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ServiceWorkerWrapper from './components/layout/ServiceWorkerWrapper';
 import StorageProvider from './contexts/storage/StorageProvider';
-import ThemeWrapper from './theme/ThemeWrapper';
 import ViewUnitProvider from './contexts/viewUnit/ViewUnitProvider';
 
 const root = ReactDOM.createRoot(
@@ -19,11 +19,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeWrapper>
-        <ServiceWorkerWrapper>
-          <PersonalDetailsProvider>
-            <CssBaseline />
-            <StorageProvider>
+      <StorageProvider>
+        <CustomThemeProvider>
+          <ServiceWorkerWrapper>
+            <PersonalDetailsProvider>
+              <CssBaseline />
               <ViewUnitProvider>
                 <Routes>
                   <Route path="/" element={<App />} />
@@ -31,10 +31,10 @@ root.render(
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </ViewUnitProvider>
-            </StorageProvider>
-          </PersonalDetailsProvider>
-        </ServiceWorkerWrapper>
-      </ThemeWrapper>
+            </PersonalDetailsProvider>
+          </ServiceWorkerWrapper>
+        </CustomThemeProvider>
+      </StorageProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
