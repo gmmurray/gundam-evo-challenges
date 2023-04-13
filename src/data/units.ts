@@ -172,4 +172,12 @@ export const unitOptions: Record<Unit['id'], Unit> = {
       'A unit with superb offensive capabilities, featuring a main weapon that does not require reloading.It can destroy individual enemies with its Double Gatling Gun (Dual Wield) and suppress an area with its Hatch Full Open (Barrage).',
     model: 'XXXG-01H2',
   },
+  dynames: {
+    id: 'dynames',
+    name: 'Gundam Dynames',
+    imageName: 'dynames.png',
+    websiteId: 21,
+    description: `The unit's ability to swap its main weapons makes it effective at any range.In TRANS-AM mode, the GN Sniper Rifle deals increased damage.`,
+    model: 'GN-002'
+  }
 };

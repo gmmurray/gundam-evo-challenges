@@ -1,3 +1,9 @@
+## [2.5.0] - 2023-04-13
+### Added
+- Unit grouping for GM, Sazabi, Dom Trooper, Dynames
+- Unit grouping for Asshimar, Zaku II Ranged, Exia, Dynames
+- Undo feature when to undo a recently deleted challenge progress
+---
 ## [2.4.2] - 2023-04-04
 ### Added
 - Unit grouping for Pale Rider, Gundam, Sazabi, Marasai
