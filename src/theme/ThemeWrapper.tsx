@@ -8,7 +8,9 @@ const ThemeWrapper = ({ children }: PropsWithChildren) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const { localStorage: storage } = useStorageContext();
   return (
-    <ThemeProvider theme={getTheme(prefersDarkMode, storage.theme)}>
+    <ThemeProvider
+      theme={getTheme(prefersDarkMode, storage.userPreferences?.theme)}
+    >
       {children}
     </ThemeProvider>
   );

@@ -35,3 +35,8 @@ export type SummarySortOptions = {
   sort: 'name' | 'challengeCount';
   order: 'asc' | 'desc';
 };
+
+export const defaultSummarySortOptions: SummarySortOptions = {
+  sort: 'challengeCount',
+  order: 'desc',
+};

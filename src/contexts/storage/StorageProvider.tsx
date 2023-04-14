@@ -5,6 +5,7 @@ import {
   defaultStorageContext,
 } from './storageContext';
 
+import deepMerge from 'ts-deepmerge';
 import useLocalStorageState from 'use-local-storage-state';
 
 type Props = {} & PropsWithChildren;
@@ -66,21 +67,23 @@ const StorageProvider = ({ children }: Props) => {
     [setLocalStorageState],
   );
 
-  const handleUpdateTheme = useCallback<StorageContextType['updateTheme']>(
-    theme => {
-      setLocalStorageState(state => ({ ...state, theme }));
+  const handleUpdatePreferences = useCallback<
+    StorageContextType['updatePreferences']
+  >(
+    userPreferences => {
+      setLocalStorageState(state => ({ ...state, userPreferences }));
     },
     [setLocalStorageState],
   );
 
   const contextValue: StorageContextType = {
     localStorage: {
-      ...localStorageState,
+      ...deepMerge(defaultStorageContext.localStorage, localStorageState),
     },
     updateChallenge: handleUpdateChallenge,
     resetChallenges: handleResetChallenges,
     updateUserGroupings: handleUpdateUserGroupings,
-    updateTheme: handleUpdateTheme,
+    updatePreferences: handleUpdatePreferences,
   };
 
   return (

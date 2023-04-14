@@ -1,3 +1,9 @@
+## [2.6.0] - 2023-04-13
+### Added
+- User preferences!
+  - hide completed challenges
+  - ✨themes✨
+---
 ## [2.5.0] - 2023-04-13
 ### Added
 - Unit grouping for GM, Sazabi, Dom Trooper, Dynames

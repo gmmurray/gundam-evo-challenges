@@ -3,14 +3,12 @@ import { Fragment, useState } from 'react';
 
 import Button from '@mui/material/Button';
 import ManageUnitsDialog from '../units/ManageUnitsDialog';
-import ThemeMenu from '../theme/ThemeMenu';
 import Typography from '@mui/material/Typography';
+import { usePreferences } from '../../contexts/preferences/PreferencesContext';
 
 const HeaderSection = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [themeMenuAnchor, setThemeMenuAnchor] = useState<
-    HTMLElement | undefined
-  >(undefined);
+  const { onDialogToggle } = usePreferences();
   return (
     <Fragment>
       <Box>
@@ -39,25 +37,18 @@ const HeaderSection = () => {
               alignItems: 'center',
             }}
           >
+            <Button onClick={() => setDialogOpen(true)}>Units</Button>
             <Badge badgeContent="New" color="primary">
-              <Button onClick={e => setThemeMenuAnchor(e.currentTarget)}>
-                Theme
+              <Button sx={{ ml: 1 }} onClick={() => onDialogToggle()}>
+                Preferences
               </Button>
             </Badge>
-            <Button sx={{ ml: 1 }} onClick={() => setDialogOpen(true)}>
-              Units
-            </Button>
           </Grid>
         </Grid>
       </Box>
       <ManageUnitsDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-      />
-      <ThemeMenu
-        open={!!themeMenuAnchor}
-        anchorEl={themeMenuAnchor}
-        onClose={() => setThemeMenuAnchor(undefined)}
       />
     </Fragment>
   );

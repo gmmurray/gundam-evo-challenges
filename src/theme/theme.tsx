@@ -17,7 +17,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-export const specialThemeDefinitions = {
+export const userThemeDefinitions = {
   default: {
     title: 'Default',
     short: 'Default',
@@ -39,6 +39,8 @@ export const specialThemeDefinitions = {
     short: 'Zeon (dark)',
   },
 } as const;
+
+export type UserThemeKey = keyof typeof userThemeDefinitions;
 
 const getDefaultTheme = (prefersDarkMode: boolean): ThemeOptions => ({
   palette: {
@@ -105,7 +107,7 @@ const zeonDarkTheme: ThemeOptions = {
   },
 };
 
-const specialThemes = {
+const userThemes = {
   default: getDefaultTheme(true),
   efsf: efsfTheme,
   efsfDark: efsfDarkTheme,
@@ -113,19 +115,19 @@ const specialThemes = {
   zeonDark: zeonDarkTheme,
 };
 
-const getSpecialTheme = (
+const getCustomTheme = (
   prefersDarkMode: boolean,
-  currentTheme: keyof typeof specialThemeDefinitions,
+  currentTheme: UserThemeKey,
 ): ThemeOptions => {
-  return specialThemes[currentTheme] ?? getDefaultTheme(prefersDarkMode);
+  return userThemes[currentTheme] ?? getDefaultTheme(prefersDarkMode);
 };
 
 const getTheme = (
   prefersDarkMode: boolean,
-  currentTheme: keyof typeof specialThemeDefinitions,
+  currentTheme: UserThemeKey = 'default',
 ) => {
   let theme = createTheme({
-    ...getSpecialTheme(prefersDarkMode, currentTheme),
+    ...getCustomTheme(prefersDarkMode, currentTheme),
     medals: {
       gold: '#fcd55e',
       silver: '#b5b9c4',

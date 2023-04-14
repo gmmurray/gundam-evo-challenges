@@ -14,22 +14,21 @@ import {
   Typography,
 } from '@mui/material';
 import { Fragment, useCallback, useEffect, useState } from 'react';
-import { SummarySortOptions, UnitSummaryRecord } from '../../types/challenges';
+import {
+  SummarySortOptions,
+  UnitSummaryRecord,
+  defaultSummarySortOptions,
+} from '../../types/challenges';
 import {
   getSummaryRecordsFromMap,
   searchAndSortSummaryRecords,
 } from '../../helpers/challengeHelpers';
 
 import ClearIcon from '@mui/icons-material/Clear';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ExpandIcon from '../material/ExpandIcon';
 import UnitSummary from '../units/UnitSummary';
+import { usePreferences } from '../../contexts/preferences/PreferencesContext';
 import { useSummaryContext } from '../../contexts/summary/SummaryContext';
-
-const defaultSortOptions: SummarySortOptions = {
-  sort: 'challengeCount',
-  order: 'desc',
-};
 
 const sortLabels: Record<
   SummarySortOptions['sort'],
@@ -47,9 +46,13 @@ const sortLabels: Record<
 
 const SummarySection = () => {
   const { unitSummary } = useSummaryContext();
+  const {
+    preferences: {
+      summary: { sortOptions, ...summaryPreferences },
+    },
+    onPreferencesChange,
+  } = usePreferences();
   const [search, setSearch] = useState('');
-  const [sortOptions, setSortOptions] =
-    useState<SummarySortOptions>(defaultSortOptions);
   const [visibleSummaries, setVisibleSummaries] = useState<UnitSummaryRecord[]>(
     getSummaryRecordsFromMap(unitSummary),
   );
@@ -66,38 +69,39 @@ const SummarySection = () => {
       sortOptions,
     );
     setVisibleSummaries(result);
-  }, [search, sortOptions, unitSummary]);
+  }, [sortOptions, search, unitSummary]);
 
   const handleClearSearch = useCallback(() => {
     setSearch('');
   }, []);
 
-  const handleUpdateSort = useCallback((key: SummarySortOptions['sort']) => {
-    setSortOptions(state => {
+  const handleUpdateSort = useCallback(
+    (key: SummarySortOptions['sort']) => {
       let newSort: SummarySortOptions['sort'];
       let newOrder: SummarySortOptions['order'];
 
-      if (state.sort === key) {
-        newSort = state.sort;
-        newOrder = state.order === 'asc' ? 'desc' : 'asc';
+      if (sortOptions.sort === key) {
+        newSort = sortOptions.sort;
+        newOrder = sortOptions.order === 'asc' ? 'desc' : 'asc';
       } else {
         newSort = key;
-        newOrder = defaultSortOptions.order;
+        newOrder = defaultSummarySortOptions.order;
       }
 
-      return {
-        sort: newSort,
-        order: newOrder,
-      };
-    });
-  }, []);
+      onPreferencesChange('summary', {
+        ...summaryPreferences,
+        sortOptions: { sort: newSort, order: newOrder },
+      });
+    },
+    [
+      onPreferencesChange,
+      sortOptions.order,
+      sortOptions.sort,
+      summaryPreferences,
+    ],
+  );
 
-  const sortOrderIcon =
-    sortOptions.order === 'asc' ? (
-      <KeyboardArrowUpIcon />
-    ) : (
-      <KeyboardArrowDownIcon />
-    );
+  const sortOrderIcon = <ExpandIcon visible={sortOptions.order === 'desc'} />;
 
   return (
     <Fragment>

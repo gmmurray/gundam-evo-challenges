@@ -1,18 +1,19 @@
 import {
   ChallengeProgress,
   ChallengesStorageKey,
+  defaultSummarySortOptions,
 } from '../../types/challenges';
 import { createContext, useContext } from 'react';
 
+import { IUserPreferences } from '../../types/userPreferences';
 import { UnitGrouping } from '../../data/unitGroupings';
-import { specialThemeDefinitions } from '../../theme/theme';
 
 export type StorageContextType = {
   localStorage: {
     dailies: Record<number, ChallengeProgress>;
     weeklies: Record<number, ChallengeProgress>;
     userGroupings: UnitGrouping[];
-    theme: keyof typeof specialThemeDefinitions;
+    userPreferences: IUserPreferences;
   };
   updateChallenge: (
     type: ChallengesStorageKey,
@@ -21,7 +22,7 @@ export type StorageContextType = {
   ) => void;
   resetChallenges: (type: ChallengesStorageKey) => void;
   updateUserGroupings: (grouping: UnitGrouping) => void;
-  updateTheme: (newTheme: keyof typeof specialThemeDefinitions) => void;
+  updatePreferences: (value: IUserPreferences) => void;
 };
 
 export const defaultStorageContext: StorageContextType = {
@@ -29,12 +30,22 @@ export const defaultStorageContext: StorageContextType = {
     dailies: {},
     weeklies: {},
     userGroupings: [],
-    theme: 'default',
+    userPreferences: {
+      list: {
+        hideCompleted: false,
+      },
+      summary: {
+        sortOptions: {
+          ...defaultSummarySortOptions,
+        },
+      },
+      theme: 'default',
+    },
   },
   updateChallenge: () => {},
   resetChallenges: () => {},
   updateUserGroupings: () => {},
-  updateTheme: () => {},
+  updatePreferences: () => {},
 };
 
 export const StorageContext = createContext(defaultStorageContext);

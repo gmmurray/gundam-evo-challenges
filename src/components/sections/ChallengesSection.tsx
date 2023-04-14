@@ -8,10 +8,10 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import ChallengeEditor from '../challenges/ChallengeEditor';
 import ChallengeListItem from '../challenges/ChallengeListItem';
 import Collapse from '@mui/material/Collapse';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandIcon from '../material/ExpandIcon';
 import IconButton from '@mui/material/IconButton';
 import ReactTimeago from 'react-timeago';
+import { usePreferences } from '../../contexts/preferences/PreferencesContext';
 import { useStorageContext } from '../../contexts/storage/storageContext';
 
 const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
@@ -38,6 +38,7 @@ const ChallengesSection = ({
   const [undoState, setUndoState] = useState<
     Record<number, ChallengeProgress | undefined>
   >({});
+  const { preferences, onDialogToggle } = usePreferences();
 
   const challenges = storage[storageKey];
 
@@ -115,7 +116,7 @@ const ChallengesSection = ({
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
           <IconButton onClick={handleToggleHidden}>
-            {hideSection ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            <ExpandIcon visible={!hideSection} />
           </IconButton>
         </Box>
         <Box>
@@ -125,7 +126,16 @@ const ChallengesSection = ({
           <Typography variant="subtitle2" sx={{ color: resetTextColor }}>
             Resets <ReactTimeago date={nextReset} />
           </Typography>
-          <Typography variant="overline">{`${completedCount}/${challengeCount} completed`}</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="overline">{`${completedCount}/${challengeCount} completed`}</Typography>
+            {completedCount > 0 && preferences.list.hideCompleted && (
+              <Button
+                onClick={onDialogToggle}
+                size="small"
+                sx={{ color: 'text.secondary' }}
+              >{`(hidden)`}</Button>
+            )}
+          </Box>
         </Box>
         <Box sx={{ ml: 'auto' }}>
           <Button onClick={handleReset}>Reset</Button>
@@ -158,6 +168,17 @@ const ChallengesSection = ({
               );
             }
           })}
+          {completedCount === challengeCount &&
+            preferences.list.hideCompleted && (
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: 'text.secondary' }}
+                >
+                  All done!
+                </Typography>
+              </Box>
+            )}
         </List>
       </Collapse>
     </Fragment>

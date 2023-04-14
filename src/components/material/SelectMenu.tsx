@@ -1,7 +1,7 @@
-import { Button, ButtonProps, Menu, MenuItem } from '@mui/material';
+import { Button, ButtonProps, Menu, MenuItem, Tooltip } from '@mui/material';
 import { Fragment, useCallback, useState } from 'react';
 
-type MenuOption = { label: string; value: any };
+type MenuOption = { label: string; value: any; tooltip?: string };
 
 type Props = {
   title: string;
@@ -58,16 +58,18 @@ const SelectMenu = ({
           horizontal: 'left',
         }}
       >
-        {options.map(({ label, value }, index) => {
+        {options.map(({ label, value, tooltip }, index) => {
           const selected = value === currentValue;
           return (
-            <MenuItem
-              key={index}
-              selected={selected}
-              onClick={() => onClick(value)}
-            >
-              {label}
-            </MenuItem>
+            <Tooltip title={tooltip} key={index}>
+              <MenuItem
+                key={index}
+                selected={selected}
+                onClick={() => onClick(value)}
+              >
+                {label}
+              </MenuItem>
+            </Tooltip>
           );
         })}
         {customOption && (

@@ -13,6 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Typography from '@mui/material/Typography';
 import UnitGroupingDisplay from '../units/UnitGroupingDisplay';
 import { challengeTypes } from '../../data/challengeTypes';
+import { usePreferences } from '../../contexts/preferences/PreferencesContext';
 import { useRecommendationContext } from '../../contexts/recommendations/RecommendationContext';
 
 type Props = {
@@ -29,6 +30,7 @@ const ChallengeListItem = ({
   divider,
 }: Props) => {
   const { recommendations } = useRecommendationContext();
+  const { preferences } = usePreferences();
   const challengeType = challengeTypes[challenge.type];
   const isComplete = challenge.total === challenge.progress;
   const canIncrement = !isComplete;
@@ -58,6 +60,8 @@ const ChallengeListItem = ({
     onClear();
   }, [onClear]);
 
+  const hidden = isComplete && preferences.list.hideCompleted;
+
   return (
     <Fragment>
       <ListItem
@@ -65,6 +69,7 @@ const ChallengeListItem = ({
         className={isComplete ? 'Mui-selected' : undefined}
         sx={{
           my: 1,
+          display: hidden ? 'none' : undefined,
         }}
       >
         <ListItemIcon>
