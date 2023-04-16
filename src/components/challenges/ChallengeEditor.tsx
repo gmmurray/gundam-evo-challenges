@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
+import { Box, Button, Grid, IconButton, ListItem, Paper } from '@mui/material';
 import {
   ChallengeProgress,
   ChallengesStorageKey,
@@ -34,7 +27,6 @@ const getCanSave = (challenge: Partial<ChallengeProgress>) =>
 type Props = {
   onSave: (value: ChallengeProgress) => void;
   resetType: ChallengesStorageKey;
-  divider: boolean;
   undoProgress?: ChallengeProgress;
   onUndo: () => any;
 };
@@ -44,7 +36,6 @@ const ChallengeEditor = ({
   onUndo,
   undoProgress,
   resetType,
-  divider,
 }: Props) => {
   const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>({});
   const [unitsDialogOpen, setUnitsDialogOpen] = useState(false);
@@ -129,32 +120,36 @@ const ChallengeEditor = ({
 
   return (
     <Fragment>
-      <ListItem
-        secondaryAction={
-          <Box>
-            <IconButton onClick={canUndo ? onUndo : handleReset}>
-              {canUndo ? <RestoreIcon /> : <ClearIcon />}
-            </IconButton>
-          </Box>
-        }
-        divider={divider}
-      >
-        <ListItemText disableTypography>
+      <Paper sx={{ my: 1, py: 1 }}>
+        <ListItem
+          secondaryAction={
+            <Box>
+              <IconButton onClick={canUndo ? onUndo : handleReset}>
+                {canUndo ? <RestoreIcon /> : <ClearIcon />}
+              </IconButton>
+            </Box>
+          }
+        >
           <Grid container spacing={2}>
             <Grid item>
               <SelectMenu
-                title="Type?"
+                title="Select challenge"
                 currentValue={challenge.type}
                 onChange={value => handleUpdate('type', value)}
                 options={Object.keys(challengeTypes).map(key => ({
                   label: challengeTypes[key].title,
                   value: key,
                 }))}
+                buttonProps={{
+                  variant: 'contained',
+                }}
               />
             </Grid>
             <Grid item>
               <SelectMenu
-                title={challenge.total?.toLocaleString() ?? 'Amount?'}
+                hideEmpty={false}
+                showEndIcon
+                title={challenge.total?.toLocaleString() ?? 'Qty'}
                 currentValue={challenge.total}
                 onChange={value => handleUpdate('total', value)}
                 options={
@@ -169,22 +164,30 @@ const ChallengeEditor = ({
                   label: 'Other...',
                   onClick: () => setCustomAmountDialogOpen(true),
                 }}
+                buttonProps={{
+                  variant: 'contained',
+                }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={challenge.grouping ? undefined : 'auto'}>
               <Fragment>
-                <Button onClick={() => setUnitsDialogOpen(true)}>
+                <Button
+                  variant={
+                    challenge.grouping === undefined ? 'contained' : undefined
+                  }
+                  onClick={() => setUnitsDialogOpen(true)}
+                >
                   {challenge.grouping !== undefined ? (
                     <UnitGroupingDisplay grouping={challenge.grouping} />
                   ) : (
-                    'Units?'
+                    'Select units'
                   )}
                 </Button>
               </Fragment>
             </Grid>
           </Grid>
-        </ListItemText>
-      </ListItem>
+        </ListItem>
+      </Paper>
       <UnitGroupingDialog
         open={unitsDialogOpen}
         onClose={() => setUnitsDialogOpen(false)}

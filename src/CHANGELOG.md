@@ -1,3 +1,7 @@
+## [2.6.1] - 2023-04-16
+### Changed
+- Fixed and improved UX 
+---
 ## [2.6.0] - 2023-04-13
 ### Added
 - User preferences!

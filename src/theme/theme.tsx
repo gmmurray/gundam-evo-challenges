@@ -42,9 +42,14 @@ export const userThemeDefinitions = {
 
 export type UserThemeKey = keyof typeof userThemeDefinitions;
 
+const basicTheme = createTheme();
+
 const getDefaultTheme = (prefersDarkMode: boolean): ThemeOptions => ({
   palette: {
     mode: prefersDarkMode ? 'dark' : 'light',
+    secondary: {
+      main: basicTheme.palette.primary.light,
+    },
   },
   // components: {
   //   MuiCssBaseline: {
@@ -63,8 +68,8 @@ const efsfTheme: ThemeOptions = {
     primary: {
       main: '#2139b1',
     },
-    background: {
-      paper: '#fdd000',
+    secondary: {
+      main: '#fdd000',
     },
   },
 };
@@ -75,8 +80,8 @@ const efsfDarkTheme: ThemeOptions = {
     primary: {
       main: '#fdd000',
     },
-    background: {
-      paper: '#2139b1',
+    secondary: {
+      main: '#2139b1',
     },
   },
 };
@@ -85,11 +90,13 @@ const zeonTheme: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
+      main: '#fdd000',
+    },
+    secondary: {
       main: '#000',
     },
     background: {
       default: '#800000',
-      paper: '#000',
     },
   },
 };
@@ -100,9 +107,11 @@ const zeonDarkTheme: ThemeOptions = {
     primary: {
       main: '#800000',
     },
+    secondary: {
+      main: '#fdd000',
+    },
     background: {
       default: '#000',
-      paper: '#800000',
     },
   },
 };

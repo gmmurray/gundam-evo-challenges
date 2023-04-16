@@ -144,14 +144,12 @@ const ChallengesSection = ({
       <Collapse in={!hideSection} timeout={500}>
         <List>
           {[...Array(challengeCount)].map((_, index) => {
-            const isLast = index === challengeCount - 1;
             if (challenges[index]) {
               return (
                 <ChallengeListItem
                   key={index}
                   challenge={challenges[index]}
                   onChange={challenge => handleUpdate(index, challenge)}
-                  divider={!isLast}
                   onClear={() => handleClearChallenge(index)}
                 />
               );
@@ -161,7 +159,6 @@ const ChallengesSection = ({
                   key={index}
                   resetType={storageKey}
                   onSave={challenge => handleUpdate(index, challenge)}
-                  divider={!isLast}
                   undoProgress={undoState[index]}
                   onUndo={() => handleUndo(index)}
                 />

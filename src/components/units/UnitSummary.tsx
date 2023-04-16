@@ -81,7 +81,6 @@ const UnitSummary = ({ unitId, summary }: Props) => {
                       <LinearProgress
                         variant="determinate"
                         value={(progress / total) * 100}
-                        color="inherit"
                       />
                     </Grid>
                   </Grid>

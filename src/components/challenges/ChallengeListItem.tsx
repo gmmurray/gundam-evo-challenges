@@ -1,5 +1,5 @@
 import { Fragment, useCallback } from 'react';
-import { ListItem, ListItemIcon, Stack } from '@mui/material';
+import { ListItem, ListItemIcon, Paper, Stack } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import { ChallengeProgress } from '../../types/challenges';
@@ -20,15 +20,9 @@ type Props = {
   challenge: ChallengeProgress;
   onChange: (value?: ChallengeProgress) => void;
   onClear: () => any;
-  divider: boolean;
 };
 
-const ChallengeListItem = ({
-  challenge,
-  onChange,
-  onClear,
-  divider,
-}: Props) => {
+const ChallengeListItem = ({ challenge, onChange, onClear }: Props) => {
   const { recommendations } = useRecommendationContext();
   const { preferences } = usePreferences();
   const challengeType = challengeTypes[challenge.type];
@@ -64,78 +58,79 @@ const ChallengeListItem = ({
 
   return (
     <Fragment>
-      <ListItem
-        divider={divider}
-        className={isComplete ? 'Mui-selected' : undefined}
-        sx={{
-          my: 1,
-          display: hidden ? 'none' : undefined,
-        }}
-      >
-        <ListItemIcon>
-          <IconButton onClick={handleComplete}>
-            {isComplete ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-          </IconButton>
-        </ListItemIcon>
-        <Grid
-          container
+      <Paper>
+        <ListItem
+          className={isComplete ? 'Mui-selected' : undefined}
           sx={{
-            display: 'flex',
-            alignItems: 'center',
+            my: 1,
+            display: hidden ? 'none' : undefined,
           }}
         >
-          <Grid item xs>
-            <Grid container spacing={1}>
-              <Grid item xs={12} md>
-                <Typography variant="body1">{challengeType.title}</Typography>
-                <LinearProgressWithLabel
-                  numerator={challenge.progress}
-                  denominator={challenge.total}
-                />
+          <ListItemIcon>
+            <IconButton onClick={handleComplete}>
+              {isComplete ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            </IconButton>
+          </ListItemIcon>
+          <Grid
+            container
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Grid item xs>
+              <Grid container spacing={1}>
+                <Grid item xs={12} md>
+                  <Typography variant="body1">{challengeType.title}</Typography>
+                  <LinearProgressWithLabel
+                    numerator={challenge.progress}
+                    denominator={challenge.total}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <UnitGroupingDisplay
+                    grouping={challenge.grouping}
+                    viewEnabled={true}
+                    recommendations={isComplete ? [] : recommendations}
+                  />
+                </Grid>
               </Grid>
-              <Grid
-                item
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <UnitGroupingDisplay
-                  grouping={challenge.grouping}
-                  viewEnabled={true}
-                  recommendations={isComplete ? [] : recommendations}
-                />
+            </Grid>
+            <Grid item xs="auto">
+              <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+                {isComplete ? (
+                  <IconButton onClick={handleClear}>
+                    <DeleteIcon />
+                  </IconButton>
+                ) : (
+                  <Stack direction="column">
+                    <IconButton
+                      onClick={() => handleUpdateProgress(true)}
+                      disabled={!canIncrement}
+                      size="medium"
+                    >
+                      <AddIcon fontSize="inherit" />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleUpdateProgress(false)}
+                      disabled={!canDecrement}
+                      size="medium"
+                    >
+                      <RemoveIcon fontSize="inherit" />
+                    </IconButton>
+                  </Stack>
+                )}
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs="auto">
-            <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-              {isComplete ? (
-                <IconButton onClick={handleClear}>
-                  <DeleteIcon />
-                </IconButton>
-              ) : (
-                <Stack direction="column">
-                  <IconButton
-                    onClick={() => handleUpdateProgress(true)}
-                    disabled={!canIncrement}
-                    size="medium"
-                  >
-                    <AddIcon fontSize="inherit" />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleUpdateProgress(false)}
-                    disabled={!canDecrement}
-                    size="medium"
-                  >
-                    <RemoveIcon fontSize="inherit" />
-                  </IconButton>
-                </Stack>
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
-      </ListItem>
+        </ListItem>
+      </Paper>
     </Fragment>
   );
 };

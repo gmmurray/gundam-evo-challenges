@@ -8,7 +8,14 @@ const RecommendationSection = () => {
 
   return (
     <Fade in={recommendations.length > 0} timeout={500} unmountOnExit>
-      <Paper sx={{ m: 2, py: 1, px: 2 }}>
+      <Paper
+        sx={{
+          my: 2,
+          py: 1,
+          px: 2,
+          backgroundColor: theme => theme.palette.secondary.dark,
+        }}
+      >
         <Grid container spacing={1}>
           <Grid
             item

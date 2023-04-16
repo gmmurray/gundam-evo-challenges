@@ -38,7 +38,7 @@ const HeaderSection = () => {
             }}
           >
             <Button onClick={() => setDialogOpen(true)}>Units</Button>
-            <Badge badgeContent="New" color="primary">
+            <Badge badgeContent="New" color="secondary">
               <Button sx={{ ml: 1 }} onClick={() => onDialogToggle()}>
                 Preferences
               </Button>

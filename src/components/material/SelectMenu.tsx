@@ -1,6 +1,8 @@
 import { Button, ButtonProps, Menu, MenuItem, Tooltip } from '@mui/material';
 import { Fragment, useCallback, useState } from 'react';
 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 type MenuOption = { label: string; value: any; tooltip?: string };
 
 type Props = {
@@ -9,7 +11,9 @@ type Props = {
   onChange: (value: MenuOption['value']) => any;
   options: MenuOption[];
   buttonProps?: ButtonProps;
+  hideEmpty?: boolean;
   customOption?: { label: string; onClick: () => void };
+  showEndIcon?: boolean;
 };
 
 const SelectMenu = ({
@@ -17,6 +21,8 @@ const SelectMenu = ({
   currentValue,
   onChange,
   options,
+  hideEmpty = true,
+  showEndIcon = false,
   buttonProps,
   customOption,
 }: Props) => {
@@ -30,7 +36,7 @@ const SelectMenu = ({
     [currentValue, onChange],
   );
 
-  if (!options.length) {
+  if (hideEmpty && !options.length) {
     return null;
   }
 
@@ -39,9 +45,11 @@ const SelectMenu = ({
   return (
     <Fragment>
       <Button
+        disabled={!options.length}
         variant={currentValue === undefined ? 'outlined' : 'contained'}
         {...buttonProps}
         onClick={e => setAnchorEl(e.currentTarget)}
+        endIcon={showEndIcon ? <ArrowDropDownIcon /> : undefined}
       >
         {label}
       </Button>
