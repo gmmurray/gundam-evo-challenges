@@ -20,11 +20,19 @@ const StorageProvider = ({ children }: Props) => {
     StorageContextType['updateChallenge']
   >(
     (type, key, challenge) => {
+      const isCompletion = challenge && challenge.progress === challenge.total;
       setLocalStorageState(state => ({
         ...state,
         [type]: {
           ...state[type],
           [key]: challenge,
+        },
+        userStats: {
+          ...(state.userStats ?? {}),
+          completedChallenges: [
+            ...((state.userStats ?? {}).completedChallenges ?? []),
+            ...(isCompletion ? [{ ...challenge, reset: type }] : []),
+          ],
         },
       }));
     },

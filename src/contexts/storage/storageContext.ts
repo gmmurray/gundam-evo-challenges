@@ -6,6 +6,7 @@ import {
 import { createContext, useContext } from 'react';
 
 import { IUserPreferences } from '../../types/userPreferences';
+import { IUserStats } from '../../types/userStats';
 import { UnitGrouping } from '../../data/unitGroupings';
 
 export type StorageContextType = {
@@ -14,6 +15,7 @@ export type StorageContextType = {
     weeklies: Record<number, ChallengeProgress>;
     userGroupings: UnitGrouping[];
     userPreferences: IUserPreferences;
+    userStats: IUserStats;
   };
   updateChallenge: (
     type: ChallengesStorageKey,
@@ -40,6 +42,9 @@ export const defaultStorageContext: StorageContextType = {
         },
       },
       theme: 'default',
+    },
+    userStats: {
+      completedChallenges: [],
     },
   },
   updateChallenge: () => {},

@@ -8,6 +8,8 @@ import FooterSection from './components/sections/FooterSection';
 import HeaderSection from './components/sections/HeaderSection';
 import ListSection from './components/sections/ListSection';
 import { RecommendationProvider } from './contexts/recommendations/RecommendationContext';
+import StatsProvider from './contexts/stats/StatsProvider';
+import StatsSection from './components/sections/StatsSection';
 import SummaryProvider from './contexts/summary/SummaryContext';
 import SummarySection from './components/sections/SummarySection';
 
@@ -30,6 +32,7 @@ function App() {
           >
             <Tab label="List" value="1" />
             <Tab label="Summary" value="2" />
+            <Tab label="Stats" value="3" />
           </TabList>
         </Box>
         <RecommendationProvider>
@@ -50,6 +53,15 @@ function App() {
             </Fade>
           </TabPanel>
         </SummaryProvider>
+        <StatsProvider>
+          <TabPanel value="3">
+            <Fade in={currentTab === '3'} timeout={500}>
+              <Box>
+                <StatsSection />
+              </Box>
+            </Fade>
+          </TabPanel>
+        </StatsProvider>
       </TabContext>
       <Divider sx={{ my: 2 }} />
       <FooterSection />
