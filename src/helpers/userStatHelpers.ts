@@ -1,32 +1,41 @@
+import { ChallengesStorageKey } from '../types/challenges';
 import { IUserStats } from '../types/userStats';
 
-type GetStatTotals = {
-  challengeCount: Record<string, number>; // # of each challenge
-  challengeProgress: Record<string, number>; // # of kills/revives/etc (daily quantity / weekly quantity)
-  units: Record<string, number>;
+export type GetStatTotals = {
+  challengeCount: Record<ChallengesStorageKey, Record<string, number>>;
+  challengeProgress: Record<string, number>;
+  units: Record<ChallengesStorageKey, Record<string, number>>;
 };
 
 export const getStatTotals = (
   challenges: IUserStats['completedChallenges'],
 ): GetStatTotals => {
   let results: GetStatTotals = {
-    challengeCount: {},
+    challengeCount: {
+      dailies: {},
+      weeklies: {},
+    },
     challengeProgress: {},
-    units: {},
+    units: {
+      dailies: {},
+      weeklies: {},
+    },
   };
   challenges.forEach(c => {
-    if (!results.challengeCount[c.type]) {
-      results.challengeCount[c.type] = 0;
+    if (!results.challengeCount[c.reset][c.type]) {
+      results.challengeCount[c.reset][c.type] = 0;
+    }
+    if (!results.challengeProgress[c.type]) {
       results.challengeProgress[c.type] = 0;
     }
-    results.challengeCount[c.type] += 1;
+    results.challengeCount[c.reset][c.type] += 1;
     results.challengeProgress[c.type] += c.total;
 
     c.grouping.forEach(g => {
-      if (!results.units[g]) {
-        results.units[g] = 0;
+      if (!results.units[c.reset][g]) {
+        results.units[c.reset][g] = 0;
       }
-      results.units[g] += 1;
+      results.units[c.reset][g] += 1;
     });
   });
   return results;
