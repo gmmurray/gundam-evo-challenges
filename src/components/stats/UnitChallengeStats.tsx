@@ -20,23 +20,22 @@ import { GetStatTotals } from '../../helpers/userStatHelpers';
 import GraphTableStat from './GraphTableStat';
 import NoStatData from './NoStatData';
 import StatsSubSection from './StatsSubSection';
-import { challengeTypes } from '../../data/challengeTypes';
 import { getUniqueElements } from '../../helpers/arrayHelpers';
+import { unitOptions } from '../../data/units';
 import { useBarConfig } from '../../hooks/stats/useBarConfig';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 type Props = {
-  data: GetStatTotals['challengeCount'];
+  data: GetStatTotals['units'];
 };
 
-const ChallengeCompletionStats = ({ data }: Props) => {
+const UnitChallengeStats = ({ data }: Props) => {
   const theme = useTheme();
-
   const barConfig = useBarConfig();
 
   if (
-    Object.keys(data.dailies).length === 0 ||
+    Object.keys(data).length === 0 ||
     Object.keys(data.weeklies).length === 0
   ) {
     return <NoStatData />;
@@ -49,14 +48,13 @@ const ChallengeCompletionStats = ({ data }: Props) => {
 
   const orderedData = labelKeys
     .map(key => {
-      const { shortTitle } = challengeTypes[key];
+      const { name } = unitOptions[key];
       const dailies = data.dailies[key] ?? 0;
       const weeklies = data.weeklies[key] ?? 0;
       const total = dailies + weeklies;
-
       return {
         key,
-        name: shortTitle,
+        name,
         dailies,
         weeklies,
         total,
@@ -64,14 +62,16 @@ const ChallengeCompletionStats = ({ data }: Props) => {
     })
     .sort((a, b) => (a.total > b.total ? -1 : 1));
 
+  const labels = orderedData.map(d => d.name);
+
   return (
-    <StatsSubSection title="Challenge Completion">
+    <StatsSubSection title="Challenges by Unit">
       <GraphTableStat
         graph={
           <Bar
             options={barConfig}
             data={{
-              labels: orderedData.map(d => d.name),
+              labels,
               datasets: [
                 {
                   label: 'Dailies',
@@ -92,7 +92,7 @@ const ChallengeCompletionStats = ({ data }: Props) => {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>Type</TableCell>
+                  <TableCell>Unit</TableCell>
                   <TableCell align="right">Dailies</TableCell>
                   <TableCell align="right">Weeklies</TableCell>
                   <TableCell align="right">Total</TableCell>
@@ -128,5 +128,4 @@ const ChallengeCompletionStats = ({ data }: Props) => {
     </StatsSubSection>
   );
 };
-
-export default ChallengeCompletionStats;
+export default UnitChallengeStats;

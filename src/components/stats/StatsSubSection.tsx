@@ -6,13 +6,16 @@ type Props = {
 } & PropsWithChildren;
 const StatsSubSection = ({ title, children }: Props) => {
   return (
-    <Box sx={{}}>
-      <Typography variant="h4" component="h2">
+    <Box
+      sx={{
+        my: 4,
+      }}
+    >
+      <Typography variant="h4" component="h2" gutterBottom>
         {title}
       </Typography>
       <Box
         sx={{
-          my: 4,
           minHeight: '33vh',
           minWidth: '100%',
           display: 'flex',
