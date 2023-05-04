@@ -1,6 +1,7 @@
 import { Grid, Paper, Typography } from '@mui/material';
 
 import { GetStatTotals } from '../../helpers/userStatHelpers';
+import NoStatData from './NoStatData';
 import StatsSubSection from './StatsSubSection';
 import { challengeTypes } from '../../data/challengeTypes';
 
@@ -16,16 +17,20 @@ const ChallengeDetailStats = ({ data }: Props) => {
       value: entry[1],
     }));
   return (
-    <StatsSubSection title="Challenge Totals">
-      <Grid container spacing={2}>
-        {dataPoints.map((dp, index) => {
-          return (
-            <Grid item xs={6} md={3} key={index}>
-              <DataPoint key={index} {...dp} />
-            </Grid>
-          );
-        })}
-      </Grid>
+    <StatsSubSection title="Challenge Metric Totals">
+      {Object.keys(data).length === 0 ? (
+        <NoStatData />
+      ) : (
+        <Grid container spacing={2}>
+          {dataPoints.map((dp, index) => {
+            return (
+              <Grid item xs={6} md={3} key={index}>
+                <DataPoint key={index} {...dp} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
     </StatsSubSection>
   );
 };

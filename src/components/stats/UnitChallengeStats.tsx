@@ -18,7 +18,6 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { GetStatTotals } from '../../helpers/userStatHelpers';
 import GraphTableStat from './GraphTableStat';
-import NoStatData from './NoStatData';
 import StatsSubSection from './StatsSubSection';
 import { getUniqueElements } from '../../helpers/arrayHelpers';
 import { unitOptions } from '../../data/units';
@@ -33,13 +32,6 @@ type Props = {
 const UnitChallengeStats = ({ data }: Props) => {
   const theme = useTheme();
   const barConfig = useBarConfig();
-
-  if (
-    Object.keys(data).length === 0 ||
-    Object.keys(data.weeklies).length === 0
-  ) {
-    return <NoStatData />;
-  }
 
   const labelKeys = getUniqueElements([
     ...Object.keys(data.dailies),
@@ -65,8 +57,12 @@ const UnitChallengeStats = ({ data }: Props) => {
   const labels = orderedData.map(d => d.name);
 
   return (
-    <StatsSubSection title="Challenges by Unit">
+    <StatsSubSection title="Completed Challenges By Unit">
       <GraphTableStat
+        noData={
+          Object.keys(data).length === 0 ||
+          Object.keys(data.weeklies).length === 0
+        }
         graph={
           <Bar
             options={barConfig}
