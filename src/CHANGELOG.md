@@ -1,3 +1,7 @@
+## [2.6.2] - 2023-05-03
+### Added
+- Unit grouping for Pale Rider, Gundam, Turn A, Dynames
+---
 ## [2.6.1] - 2023-04-16
 ### Changed
 - Fixed and improved UX 
