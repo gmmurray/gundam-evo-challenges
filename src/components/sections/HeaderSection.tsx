@@ -1,4 +1,4 @@
-import { Badge, Box, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { Fragment, useState } from 'react';
 
 import Button from '@mui/material/Button';
@@ -38,11 +38,9 @@ const HeaderSection = () => {
             }}
           >
             <Button onClick={() => setDialogOpen(true)}>Units</Button>
-            <Badge badgeContent="New" color="secondary">
-              <Button sx={{ ml: 1 }} onClick={() => onDialogToggle()}>
-                Preferences
-              </Button>
-            </Badge>
+            <Button sx={{ ml: 1 }} onClick={() => onDialogToggle()}>
+              Preferences
+            </Button>
           </Grid>
         </Grid>
       </Box>

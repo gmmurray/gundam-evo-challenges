@@ -5,7 +5,7 @@ const NoStatData = () => {
   return (
     <Typography
       variant="overline"
-      sx={{ textAlign: 'center', color: 'text.secondary' }}
+      sx={{ textAlign: 'center', color: 'text.secondary', mt: 4 }}
     >
       No data
     </Typography>
