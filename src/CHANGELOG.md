@@ -1,3 +1,7 @@
+## [2.7.0] - 2023-05-31
+### Added
+- Right click challenges to edit, remove, or rearrange
+---
 ## [2.6.2] - 2023-05-03
 ### Added
 - Unit grouping for Pale Rider, Gundam, Turn A, Dynames

@@ -1,5 +1,12 @@
-import { Fragment, useCallback } from 'react';
-import { ListItem, ListItemIcon, Paper, Stack } from '@mui/material';
+import { Fragment, useCallback, useState } from 'react';
+import {
+  ListItem,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Paper,
+  Stack,
+} from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import { ChallengeProgress } from '../../types/challenges';
@@ -20,9 +27,22 @@ type Props = {
   challenge: ChallengeProgress;
   onChange: (value?: ChallengeProgress) => void;
   onClear: () => any;
+  onEdit: () => any;
+  onMoveUp?: () => any;
+  onMoveDown?: () => any;
 };
 
-const ChallengeListItem = ({ challenge, onChange, onClear }: Props) => {
+const ChallengeListItem = ({
+  challenge,
+  onChange,
+  onClear,
+  onEdit,
+  onMoveUp,
+  onMoveDown,
+}: Props) => {
+  const [contextMenu, setContextMenu] = useState<
+    { mouseX: number; mouseY: number } | undefined
+  >(undefined);
   const { recommendations } = useRecommendationContext();
   const { preferences } = usePreferences();
   const challengeType = challengeTypes[challenge.type];
@@ -54,11 +74,30 @@ const ChallengeListItem = ({ challenge, onChange, onClear }: Props) => {
     onClear();
   }, [onClear]);
 
+  const handleContextMenu = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
+      setContextMenu(
+        contextMenu === undefined
+          ? {
+              mouseX: event.clientX + 2,
+              mouseY: event.clientY - 6,
+            }
+          : undefined,
+      );
+    },
+    [contextMenu],
+  );
+
   const hidden = isComplete && preferences.list.hideCompleted;
 
   return (
     <Fragment>
-      <Paper>
+      <Paper
+        component="div"
+        onContextMenu={handleContextMenu}
+        style={{ cursor: 'context-menu' }}
+      >
         <ListItem
           className={isComplete ? 'Mui-selected' : undefined}
           sx={{
@@ -130,6 +169,25 @@ const ChallengeListItem = ({ challenge, onChange, onClear }: Props) => {
             </Grid>
           </Grid>
         </ListItem>
+        <Menu
+          open={!!contextMenu}
+          onClose={() => setContextMenu(undefined)}
+          anchorReference="anchorPosition"
+          anchorPosition={
+            contextMenu !== undefined
+              ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+              : undefined
+          }
+        >
+          <MenuItem onClick={onEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleClear}>Remove</MenuItem>
+          <MenuItem disabled={!onMoveUp} onClick={onMoveUp}>
+            Move up
+          </MenuItem>
+          <MenuItem disabled={!onMoveDown} onClick={onMoveDown}>
+            Move down
+          </MenuItem>
+        </Menu>
       </Paper>
     </Fragment>
   );

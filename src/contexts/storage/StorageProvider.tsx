@@ -84,11 +84,36 @@ const StorageProvider = ({ children }: Props) => {
     [setLocalStorageState],
   );
 
+  const handleSwapChallenges = useCallback<
+    StorageContextType['swapChallenges']
+  >(
+    (first, second, type) => {
+      setLocalStorageState(state => {
+        const newFirst = state[type][second]
+          ? { ...state[type][second] }
+          : undefined;
+        const newSecond = state[type][first]
+          ? { ...state[type][first] }
+          : undefined;
+        return {
+          ...state,
+          [type]: {
+            ...state[type],
+            [first]: newFirst,
+            [second]: newSecond,
+          },
+        };
+      });
+    },
+    [setLocalStorageState],
+  );
+
   const contextValue: StorageContextType = {
     localStorage: {
       ...deepMerge(defaultStorageContext.localStorage, localStorageState),
     },
     updateChallenge: handleUpdateChallenge,
+    swapChallenges: handleSwapChallenges,
     resetChallenges: handleResetChallenges,
     updateUserGroupings: handleUpdateUserGroupings,
     updatePreferences: handleUpdatePreferences,

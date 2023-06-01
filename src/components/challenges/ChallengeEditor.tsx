@@ -5,6 +5,7 @@ import {
 } from '../../types/challenges';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 
+import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -29,6 +30,7 @@ type Props = {
   resetType: ChallengesStorageKey;
   undoProgress?: ChallengeProgress;
   onUndo: () => any;
+  defaultValue?: ChallengeProgress;
 };
 
 const ChallengeEditor = ({
@@ -36,8 +38,11 @@ const ChallengeEditor = ({
   onUndo,
   undoProgress,
   resetType,
+  defaultValue,
 }: Props) => {
-  const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>({});
+  const [challenge, setChallenge] = useState<Partial<ChallengeProgress>>(
+    defaultValue ?? {},
+  );
   const [unitsDialogOpen, setUnitsDialogOpen] = useState(false);
   const [customAmountDialogOpen, setCustomAmountDialogOpen] = useState(false);
   const [customAmount, setCustomAmount] = useState<number | undefined>(
@@ -68,10 +73,10 @@ const ChallengeEditor = ({
 
   // set challenge whenever the components of the challenge have been properly selected
   useEffect(() => {
-    if (getCanSave(challenge)) {
+    if (!defaultValue && getCanSave(challenge)) {
       handleSave(challenge);
     }
-  }, [challenge, handleSave]);
+  }, [challenge, defaultValue, handleSave]);
 
   // if the challenge type changes, change the total to the default for that type
   useEffect(() => {
@@ -97,9 +102,14 @@ const ChallengeEditor = ({
   );
 
   const handleReset = useCallback(() => {
+    if (defaultValue && undoProgress) {
+      onSave(undoProgress);
+      return;
+    }
+
     setChallenge({});
     setCustomAmount(undefined);
-  }, []);
+  }, [defaultValue, onSave, undoProgress]);
 
   const handleCloseCustomAmount = useCallback(() => {
     setCustomAmountDialogOpen(false);
@@ -124,6 +134,11 @@ const ChallengeEditor = ({
         <ListItem
           secondaryAction={
             <Box>
+              {!!defaultValue && (
+                <IconButton onClick={() => handleSave(challenge)}>
+                  {<CheckIcon />}
+                </IconButton>
+              )}
               <IconButton onClick={canUndo ? onUndo : handleReset}>
                 {canUndo ? <RestoreIcon /> : <ClearIcon />}
               </IconButton>

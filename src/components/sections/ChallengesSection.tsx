@@ -33,11 +33,15 @@ const ChallengesSection = ({
   const {
     localStorage: storage,
     updateChallenge,
+    swapChallenges,
     resetChallenges,
   } = useStorageContext();
   const [undoState, setUndoState] = useState<
     Record<number, ChallengeProgress | undefined>
   >({});
+  const [editProgress, setEditProgress] = useState<
+    { index: number; challenge: ChallengeProgress } | undefined
+  >(undefined);
   const { preferences, onDialogToggle } = usePreferences();
 
   const challenges = storage[storageKey];
@@ -101,6 +105,21 @@ const ChallengesSection = ({
 
       handleUpdate(index, undefined);
       setUndoState(state => ({ ...state, [index]: challenge }));
+      setEditProgress(undefined);
+    },
+    [challenges, handleUpdate],
+  );
+
+  const handleSetEditChallenge = useCallback(
+    (index: number) => {
+      const challenge = challenges[index];
+      if (!challenge) {
+        return;
+      }
+
+      handleUpdate(index, undefined);
+      setUndoState(state => ({ ...state, [index]: challenge }));
+      setEditProgress({ index, challenge });
     },
     [challenges, handleUpdate],
   );
@@ -145,15 +164,31 @@ const ChallengesSection = ({
         <List>
           {[...Array(challengeCount)].map((_, index) => {
             if (challenges[index]) {
+              let moveUp: (() => any) | undefined = undefined;
+              let moveDown: (() => any) | undefined = undefined;
+              if (index > 0) {
+                moveUp = () => swapChallenges(index, index - 1, storageKey);
+              }
+
+              if (index < challengeCount - 1) {
+                moveDown = () => swapChallenges(index, index + 1, storageKey);
+              }
               return (
                 <ChallengeListItem
                   key={index}
                   challenge={challenges[index]}
                   onChange={challenge => handleUpdate(index, challenge)}
                   onClear={() => handleClearChallenge(index)}
+                  onEdit={() => handleSetEditChallenge(index)}
+                  onMoveUp={moveUp}
+                  onMoveDown={moveDown}
                 />
               );
             } else {
+              const defaultValue =
+                editProgress && editProgress.index === index
+                  ? editProgress.challenge
+                  : undefined;
               return (
                 <ChallengeEditor
                   key={index}
@@ -161,6 +196,7 @@ const ChallengesSection = ({
                   onSave={challenge => handleUpdate(index, challenge)}
                   undoProgress={undoState[index]}
                   onUndo={() => handleUndo(index)}
+                  defaultValue={defaultValue}
                 />
               );
             }

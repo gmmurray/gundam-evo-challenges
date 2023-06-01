@@ -22,6 +22,11 @@ export type StorageContextType = {
     key: number,
     challenge?: ChallengeProgress,
   ) => void;
+  swapChallenges: (
+    first: number,
+    second: number,
+    type: ChallengesStorageKey,
+  ) => void;
   resetChallenges: (type: ChallengesStorageKey) => void;
   updateUserGroupings: (grouping: UnitGrouping) => void;
   updatePreferences: (value: IUserPreferences) => void;
@@ -48,6 +53,7 @@ export const defaultStorageContext: StorageContextType = {
     },
   },
   updateChallenge: () => {},
+  swapChallenges: () => {},
   resetChallenges: () => {},
   updateUserGroupings: () => {},
   updatePreferences: () => {},
