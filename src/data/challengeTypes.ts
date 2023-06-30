@@ -42,7 +42,7 @@ export const challengeTypes: Record<string, ChallengeType> = {
   games: {
     title: 'Play matches',
     updateProgress: incrementByOne,
-    options: [2, 15],
+    options: [1, 15, 2],
     shortTitle: 'Games',
   },
   crits: {
